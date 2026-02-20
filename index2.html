@@ -1,0 +1,1267 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Plano de Treino + Dieta</title>
+
+  <!-- ✅ FAVICON (troque a URL abaixo) -->
+  <link rel="icon" type="image/png" href="FAVICON_URL_AQUI" />
+  <!-- Ex.: <link rel="icon" href="https://seudominio.com/favicon.png" /> -->
+
+  <style>
+    :root{
+      --bg:#000;
+      --panel:#0b0b0b;
+      --text:#fff;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --border:rgba(255,255,255,.12);
+      --border2:rgba(255,255,255,.18);
+      --shadow: 0 18px 60px rgba(0,0,0,.65);
+      --radius:18px;
+      --max:1060px;
+
+      /* cores APENAS na parte de IMC */
+      --bmi-under:#38bdf8;
+      --bmi-normal:#22c55e;
+      --bmi-over:#f59e0b;
+      --bmi-obese:#ef4444;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1000px 520px at 50% -10%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(700px 420px at 20% 0%, rgba(255,255,255,.05), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    /* topbar */
+    .topbar{
+      position:fixed; top:0; left:0; right:0;
+      padding:14px 16px;
+      background: linear-gradient(180deg, rgba(0,0,0,.92), rgba(0,0,0,.58));
+      border-bottom:1px solid var(--border);
+      backdrop-filter: blur(10px);
+      z-index:10;
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+    }
+    .meta{display:flex; flex-direction:column; gap:2px; min-width:200px;}
+    .meta .step{font-size:13px; color:var(--muted2);}
+    .meta .title{font-size:14px; font-weight:900; letter-spacing:.2px;}
+
+    .bar-wrap{
+      flex:1;
+      height:10px;
+      background: rgba(255,255,255,.07);
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background: rgba(255,255,255,.85);
+      border-radius:999px;
+      transition: width .28s ease;
+    }
+    .pct{
+      min-width:60px;
+      text-align:right;
+      font-variant-numeric: tabular-nums;
+      color:var(--muted2);
+      font-size:13px;
+    }
+
+    /* layout */
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:92px 16px 18px;
+    }
+    .card{
+      width:100%;
+      max-width:var(--max);
+      background: rgba(10,10,10,.86);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-inner{padding:22px 20px;}
+
+    .kicker{color:var(--muted2); font-size:13px; letter-spacing:.2px;}
+    h1{margin:10px 0 10px; font-size:26px; line-height:1.12;}
+    .desc{margin:0 0 14px; color:var(--muted); max-width:90ch;}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:14px;
+      align-items:start;
+    }
+    @media(max-width: 980px){
+      .grid{grid-template-columns:1fr;}
+    }
+
+    .q{
+      margin-top:10px;
+      padding-top:16px;
+      border-top:1px solid var(--border);
+    }
+    .q-title{font-size:18px; font-weight:950; margin:0 0 8px;}
+    .q-help{margin:0 0 12px; color:var(--muted); font-size:14px;}
+
+    .options{display:grid; gap:10px; margin:12px 0 6px;}
+    .opt{
+      display:flex;
+      gap:12px;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      transition: background .14s ease, border-color .14s ease, transform .06s ease;
+      user-select:none;
+      align-items:center;
+      min-height:56px;
+    }
+    .opt:hover{background: rgba(255,255,255,.05); border-color: var(--border2);}
+    .opt:active{transform:scale(.995);}
+    .opt.selected{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.28);
+      outline: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* marcador: radio/checkbox */
+    .mark{
+      width:18px; height:18px;
+      border:1.5px solid rgba(255,255,255,.55);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+      background: rgba(0,0,0,.15);
+    }
+    .mark.radio{border-radius:999px;}
+    .mark.check{border-radius:4px;}
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(255,255,255,.92);
+      opacity:0;
+      transition: opacity .12s ease;
+    }
+    .tick{
+      width:10px; height:10px;
+      border-right:2px solid rgba(255,255,255,.95);
+      border-bottom:2px solid rgba(255,255,255,.95);
+      transform: rotate(45deg) translateY(-1px);
+      opacity:0;
+      transition: opacity .12s ease;
+    }
+    .opt.selected .dot{opacity:1;}
+    .opt.selected .tick{opacity:1;}
+
+    .label{display:flex; flex-direction:column; gap:3px; min-width:0;}
+    .label strong{font-weight:950;}
+    .label span{color:var(--muted2); font-size:13px;}
+
+    /* imagem só quando necessário (goal/body_current) */
+    .opt.has-media{
+      display:grid;
+      grid-template-columns: 98px 22px 1fr;
+      gap:12px;
+      align-items:center;
+    }
+    .thumb{
+      width:98px; height:98px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter: grayscale(1) contrast(1.05);
+      opacity:.92;
+    }
+
+    /* sidebar (a cada 3 perguntas) */
+    .side{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:12px;
+      position:sticky;
+      top:88px;
+    }
+    @media(max-width: 980px){
+      .side{position:relative; top:auto;}
+    }
+    .side h3{
+      margin:0 0 8px;
+      font-size:14px;
+      color: rgba(255,255,255,.88);
+      letter-spacing:.2px;
+    }
+    .side p{
+      margin:0 0 10px;
+      color: var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .side .img{
+      width:100%;
+      height: 220px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.28);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+    .side .img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter: grayscale(1) contrast(1.05);
+      opacity:.94;
+    }
+
+    /* actions */
+    .actions{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 12px;
+    }
+    .left-actions,.right-actions{display:flex; gap:10px; align-items:center;}
+    button{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:950;
+      transition: background .14s ease, border-color .14s ease, transform .06s ease;
+      white-space:nowrap;
+    }
+    button:hover{background: rgba(255,255,255,.09); border-color: var(--border2);}
+    button:active{transform: scale(.995);}
+    button.primary{
+      background: rgba(255,255,255,.92);
+      color:#000;
+      border-color: rgba(255,255,255,.35);
+    }
+    button:disabled{opacity:.45; cursor:not-allowed;}
+    .tiny{color:var(--muted2); font-size:13px;}
+
+    /* inputs */
+    .field{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px;
+    }
+    .field label{
+      display:block;
+      font-size:13px;
+      color: var(--muted2);
+      margin-bottom:8px;
+      font-weight:950;
+    }
+    input[type="number"], input[type="date"], input[type="email"]{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      color: var(--text);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+    }
+    input:focus{
+      border-color: rgba(255,255,255,.28);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+    }
+
+    /* BMI box (com cores) */
+    .bmiWrap{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:14px;
+      margin-top:12px;
+    }
+    .bmiTop{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .bmiTop .bmiVal{
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:.2px;
+    }
+    .bmiTop .bmiCat{
+      font-size:13px;
+      color: var(--muted);
+      font-weight:950;
+    }
+    .bmiBar{
+      margin-top:12px;
+      position:relative;
+      height:14px;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      display:flex;
+    }
+    .seg{height:100%;}
+    .seg.under{width:18%; background: var(--bmi-under);}
+    .seg.normal{width:24%; background: var(--bmi-normal);}
+    .seg.over{width:24%; background: var(--bmi-over);}
+    .seg.obese{width:34%; background: var(--bmi-obese);}
+    .bmiMarker{
+      position:absolute;
+      top:-6px;
+      width:2px;
+      height:26px;
+      background:#fff;
+      box-shadow: 0 0 0 3px rgba(0,0,0,.25);
+      left: 0%;
+      transform: translateX(-1px);
+    }
+
+    /* tela "SEU PLANO ESTÁ SENDO GERADO" */
+    .genWrap{
+      display:grid;
+      gap:14px;
+      padding:12px 0 2px;
+    }
+    .bigTitle{
+      font-size:40px;
+      font-weight:1000;
+      letter-spacing:.6px;
+      line-height:1.05;
+      margin:0;
+      text-transform:uppercase;
+    }
+    @media(max-width: 680px){
+      .bigTitle{font-size:30px;}
+    }
+    .genSub{
+      margin:0;
+      color: rgba(255,255,255,.70);
+      font-size:14px;
+      line-height:1.5;
+      max-width: 60ch;
+    }
+    .genBarWrap{
+      height:14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+    .genBar{
+      height:100%;
+      width:0%;
+      background: rgba(255,255,255,.88);
+      border-radius:999px;
+      transition: width .12s linear;
+    }
+    .genMeta{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      color: rgba(255,255,255,.55);
+      font-size:12px;
+    }
+
+    /* silhueta BMI */
+    .sil{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(0,0,0,.22);
+      padding:10px;
+      display:grid;
+      place-items:center;
+      min-height: 230px;
+    }
+    .sil svg{width:220px; height:220px; opacity:.95;}
+    .sil .cap{
+      margin-top:8px;
+      font-size:12px;
+      color: var(--muted2);
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="meta">
+        <div class="step" id="stepText">Progresso</div>
+        <div class="title" id="topTitle">Plano de Treino + Dieta</div>
+      </div>
+      <div class="bar-wrap"><div class="bar" id="bar"></div></div>
+      <div class="pct" id="pct">0%</div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="card-inner">
+        <div class="kicker" id="kicker"></div>
+        <h1 id="headline"></h1>
+        <p class="desc" id="desc">
+          
+        </p>
+
+        <div id="content"></div>
+
+        <div class="actions" id="actions">
+          <div class="left-actions">
+            <button id="backBtn">Voltar</button>
+          </div>
+          <div class="right-actions">
+            <span class="tiny" id="hint"></span>
+            <button class="primary" id="continueBtn" style="display:none;">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<script>
+/**
+ * CONFIG:
+ * - CHECKOUT_URL: link da PerfectPay
+ * - Favicon: no <head>
+ */
+const CHECKOUT_URL = "https://SEU-LINK-DA-PERFECTPAY-AQUI";
+
+// imagens “exercício” (a cada 3 perguntas). Troque pelos seus links.
+const EXERCISE_IMAGES = [
+  "https://images.unsplash.com/photo-1599058917212-d750089bc07d?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1550345332-09e3ac987658?auto=format&fit=crop&w=1200&q=80"
+];
+
+// imagens “corpo atual/objetivo” — troque pelos seus assets
+const BODY_GOAL_IMAGES = {
+  goal_lean: "https://images.unsplash.com/photo-1546484959-f9a3c09d93b1?auto=format&fit=crop&w=800&q=80",
+  goal_muscle: "https://images.unsplash.com/photo-1517838277536-f5f99be501b9?auto=format&fit=crop&w=800&q=80",
+  goal_athletic: "https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?auto=format&fit=crop&w=800&q=80",
+  goal_strength: "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=800&q=80",
+
+  body_slim: "https://images.unsplash.com/photo-1526401485004-2fda9f1b95b8?auto=format&fit=crop&w=800&q=80",
+  body_average: "https://images.unsplash.com/photo-1526403226-49d708e5d2f2?auto=format&fit=crop&w=800&q=80",
+  body_over: "https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?auto=format&fit=crop&w=800&q=80",
+  body_athletic: "https://images.unsplash.com/photo-1549476464-37392f717541?auto=format&fit=crop&w=800&q=80"
+};
+
+const state = {
+  mode: "question", // question | gen_email
+  index: 0,
+  answers: {},
+};
+
+const el = (id) => document.getElementById(id);
+const content = el("content");
+const backBtn = el("backBtn");
+const continueBtn = el("continueBtn");
+const bar = el("bar");
+const pct = el("pct");
+const hint = el("hint");
+
+function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+function totalSteps(){ return quiz.length; }
+function progressPct(){
+  const total = totalSteps();
+  const step = clamp(state.index, 0, total-1);
+  return Math.round((step / (total-1)) * 100);
+}
+function updateTopbar(){
+  const p = progressPct();
+  bar.style.width = `${p}%`;
+  pct.textContent = `${p}%`;
+  el("stepText").textContent = "Progresso";
+}
+
+function getAnswer(id){ return state.answers[id]; }
+function setAnswer(id, val){ state.answers[id] = val; }
+
+function isAnswered(q){
+  const a = getAnswer(q.id);
+  if(q.type === "single") return typeof a === "string" && a.length > 0;
+  if(q.type === "multi") return Array.isArray(a) && a.length >= (q.min ?? 0);
+  if(q.type === "consent") {
+    const c = a || {};
+    return !!c.truth && !!c.terms;
+  }
+  if(q.type === "metrics") {
+    const m = a || {};
+    return isFinite(m.heightCm) && isFinite(m.weightKg) && m.heightCm > 50 && m.heightCm < 260 && m.weightKg > 20 && m.weightKg < 400;
+  }
+  if(q.type === "goaldate") {
+    const d = a || {};
+    return typeof d.date === "string" && d.date.length >= 8;
+  }
+  if(q.type === "target") {
+    const t = a || {};
+    return isFinite(t.targetWeightKg) && t.targetWeightKg > 20 && t.targetWeightKg < 400;
+  }
+  if(q.type === "email") {
+    const s = String(a || "").trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+  }
+  return true;
+}
+
+/* ===== IMC ===== */
+function bmiFrom(heightCm, weightKg){
+  const h = heightCm / 100;
+  if(!isFinite(h) || h <= 0) return null;
+  return weightKg / (h*h);
+}
+function bmiCategory(bmi){
+  if(bmi < 18.5) return { key:"under", label:"Abaixo do peso" };
+  if(bmi < 25) return { key:"normal", label:"Peso normal" };
+  if(bmi < 30) return { key:"over", label:"Sobrepeso" };
+  return { key:"obese", label:"Obesidade" };
+}
+function bmiMarkerPct(bmi){
+  const min = 14, max = 45;
+  const clamped = clamp(bmi, min, max);
+  return ((clamped - min) / (max - min)) * 100;
+}
+function bmiMessage(bmi){
+  const cat = bmiCategory(bmi);
+  if(cat.key === "under") return "Abaixo do peso. Pode indicar pouca massa muscular/baixa reserva.";
+  if(cat.key === "normal") return "Faixa normal. O foco é recomposição: força + consistência.";
+  if(cat.key === "over") return "Sobrepeso. Rotina + progresso gradual tendem a mudar bem.";
+  return "Obesidade. Estratégia e consistência — passo a passo.";
+}
+function bmiRisksText(bmi){
+  const cat = bmiCategory(bmi);
+  if(cat.key === "under") return [
+    "Possível baixa energia e fadiga",
+    "Menor reserva muscular",
+    "Recuperação pior se sono/dieta estiverem ruins"
+  ];
+  if(cat.key === "normal") return [
+    "Risco geral mais baixo",
+    "Ainda depende de hábitos e sedentarismo",
+    "Foco: força + rotina"
+  ];
+  if(cat.key === "over") return [
+    "Maior risco cardiometabólico ao longo do tempo",
+    "Pioras com sedentarismo e sono ruim",
+    "Foco: consistência e progressão"
+  ];
+  return [
+    "Risco cardiometabólico mais alto ao longo do tempo",
+    "Pode impactar pressão, glicemia e sono (em muitos casos)",
+    "Foco: estratégia e constância"
+  ];
+}
+
+/* ===== Silhuetas P&B ===== */
+function bmiSilhouette(catKey){
+  const belly = { under: 22, normal: 30, over: 42, obese: 56 }[catKey] ?? 30;
+  return `
+    <div class="sil">
+      <div>
+        <svg viewBox="0 0 260 260" aria-hidden="true">
+          <rect x="10" y="10" width="240" height="240" rx="22" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)"/>
+          <circle cx="130" cy="72" r="26" fill="rgba(255,255,255,.86)"/>
+          <rect x="118" y="96" width="24" height="14" rx="7" fill="rgba(255,255,255,.78)"/>
+          <path d="
+            M 92 112
+            C 82 132, 82 170, 96 192
+            C ${130 - belly} 224, ${130 + belly} 224, 164 192
+            C 178 170, 178 132, 168 112
+            C 152 104, 108 104, 92 112
+            Z
+          " fill="rgba(255,255,255,.80)"/>
+          <path d="M78 126 C62 146, 60 172, 74 192" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="12" stroke-linecap="round"/>
+          <path d="M182 126 C198 146, 200 172, 186 192" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="12" stroke-linecap="round"/>
+          <path d="M112 210 C110 228, 112 242, 116 252" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="14" stroke-linecap="round"/>
+          <path d="M148 210 C150 228, 148 242, 144 252" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="14" stroke-linecap="round"/>
+        </svg>
+        <div class="cap">Imagem ilustrativa (representação P&B)</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ===== Quiz ===== */
+const quiz = [
+  { id:"goal", type:"single", title:"Qual é seu objetivo visual?", help:"Escolha 1 opção.", media:true,
+    options:[
+      { key:"goal_lean", label:"Mais definido", sub:"Seco / leve" },
+      { key:"goal_athletic", label:"Atlético", sub:"Estética + performance" },
+      { key:"goal_muscle", label:"Mais volume", sub:"Shape cheio" },
+      { key:"goal_strength", label:"Força", sub:"Movimentos difíceis" },
+    ]
+  },
+  { id:"age", type:"single", title:"Sua faixa de idade", help:"Escolha 1 opção.",
+    options:[
+      { key:"13-17", label:"13–17", sub:"Base e técnica" },
+      { key:"18-24", label:"18–24", sub:"Progressão rápida" },
+      { key:"25-34", label:"25–34", sub:"Consistência" },
+      { key:"35-44", label:"35–44", sub:"Recuperação inteligente" },
+      { key:"45+",   label:"45+",   sub:"Progressão segura" },
+    ]
+  },
+  { id:"body_current", type:"single", title:"Como está seu corpo hoje?", help:"Escolha 1 opção.", media:true,
+    options:[
+      { key:"body_slim", label:"Mais magro", sub:"Pouca massa" },
+      { key:"body_average", label:"Mediano", sub:"Normal" },
+      { key:"body_over", label:"Acima do peso", sub:"Gordura extra" },
+      { key:"body_athletic", label:"Já em forma", sub:"Quero performance" },
+    ]
+  },
+  { id:"days", type:"single", title:"Quantos dias/semana você treina?", help:"Escolha 1 opção.",
+    options:[
+      { key:"2", label:"2 dias", sub:"Mínimo viável" },
+      { key:"3", label:"3 dias", sub:"Equilíbrio ideal" },
+      { key:"4", label:"4 dias", sub:"Evolução mais rápida" },
+      { key:"5+", label:"5+ dias", sub:"Alta disciplina" },
+    ]
+  },
+  { id:"session_time", type:"single", title:"Quanto tempo por treino?", help:"Escolha 1 opção.",
+    options:[
+      { key:"15-25", label:"15–25 min", sub:"Enxuto" },
+      { key:"30-45", label:"30–45 min", sub:"Equilibrado" },
+      { key:"45-70", label:"45–70 min", sub:"Completo" },
+      { key:"70+", label:"70+ min", sub:"Longo" },
+    ]
+  },
+  { id:"level", type:"single", title:"Seu nível hoje", help:"Escolha 1 opção.",
+    options:[
+      { key:"beginner", label:"Iniciante", sub:"0–6 meses" },
+      { key:"intermediate", label:"Intermediário", sub:"6–24 meses" },
+      { key:"advanced", label:"Avançado", sub:"2+ anos" },
+    ]
+  },
+  { id:"injuries", type:"multi", min:0, title:"Dores/lesões recorrentes?", help:"Marque o que aplica. Clique em Continuar.",
+    options:[
+      { key:"none", label:"Nenhuma", sub:"Sem restrições" },
+      { key:"knee", label:"Joelho", sub:"Ajustar agachamentos" },
+      { key:"back", label:"Lombar", sub:"Ajustar postura/carga" },
+      { key:"shoulder", label:"Ombro", sub:"Ajustar empurrar" },
+      { key:"wrist", label:"Punho", sub:"Ajustar apoios" },
+      { key:"other", label:"Outra", sub:"Considerar no plano" },
+    ]
+  },
+  { id:"equipment", type:"multi", min:1, title:"Equipamentos disponíveis", help:"Marque tudo que você tem. Clique em Continuar.",
+    options:[
+      { key:"none", label:"Nenhum", sub:"Só peso do corpo" },
+      { key:"pullup", label:"Barra fixa", sub:"Custo/benefício" },
+      { key:"rings", label:"Argolas", sub:"Versátil" },
+      { key:"bands", label:"Elásticos", sub:"Assistência" },
+      { key:"parallettes", label:"Paralletes", sub:"Punho confortável" },
+      { key:"mat", label:"Colchonete", sub:"Core/mobilidade" },
+    ]
+  },
+  { id:"sleep_hours", type:"single", title:"Horas de sono", help:"Escolha 1 opção.",
+    options:[
+      { key:"<5", label:"< 5h", sub:"Recuperação baixa" },
+      { key:"5-6", label:"5–6h", sub:"Dá para melhorar" },
+      { key:"6-7", label:"6–7h", sub:"Ok" },
+      { key:"7-8", label:"7–8h", sub:"Bom" },
+      { key:"8+", label:"8h+", sub:"Ótimo" },
+    ]
+  },
+  { id:"alcohol_freq", type:"single", title:"Álcool", help:"Escolha 1 opção.",
+    options:[
+      { key:"never", label:"Nunca", sub:"0" },
+      { key:"rare", label:"Raramente", sub:"1–2x/mês" },
+      { key:"weekend", label:"Fins de semana", sub:"1–2x/sem" },
+      { key:"often", label:"Frequente", sub:"3–5x/sem" },
+      { key:"daily", label:"Quase todo dia", sub:"Alto" },
+    ]
+  },
+  { id:"smoke_freq", type:"single", title:"Cigarro/vape", help:"Escolha 1 opção.",
+    options:[
+      { key:"no", label:"Não", sub:"0" },
+      { key:"rare", label:"Raramente", sub:"Social" },
+      { key:"week", label:"Algumas vezes/sem", sub:"Leve" },
+      { key:"daily", label:"Todo dia", sub:"Alto" },
+    ]
+  },
+  { id:"consent", type:"consent", title:"Confirmação rápida", help:"Marque as duas caixas para continuar." },
+  { id:"metrics", type:"metrics", title:"Altura e peso", help:"Digite seus dados." },
+  { id:"bmi_info", type:"bmi_info", title:"Seu IMC e o que isso pode indicar", help:"Leitura rápida antes de continuar." },
+  { id:"goal_date", type:"goaldate", title:"Data do objetivo", help:"Escolha uma data realista." },
+  { id:"target", type:"target", title:"Peso alvo (kg)", help:"Digite o peso alvo." },
+
+  // ✅ NOVO: tela "SEU PLANO ESTÁ SENDO GERADO" (ANTES do email)
+  { id:"gen_email", type:"gen_email", title:"SEU PLANO ESTÁ SENDO GERADO", help:"Ajustando treino + dieta com base nas suas respostas." },
+
+  { id:"email", type:"email", title:"Digite seu e-mail para receber o plano", help:"Após confirmar, você será redirecionado." },
+];
+
+/* ===== Sidebar (a cada 3 perguntas) ===== */
+function shouldShowSide(){
+  const q = quiz[state.index];
+  if(!q) return false;
+  const idx1 = state.index + 1;
+  const isEvery3 = (idx1 % 3 === 0);
+  if(q.type === "metrics" || q.type === "bmi_info" || q.type === "gen_email" || q.type === "email") return false;
+  return isEvery3;
+}
+function sideCardHtml(){
+  const img = EXERCISE_IMAGES[(Math.floor(state.index / 3)) % EXERCISE_IMAGES.length];
+  return `
+    <aside class="side">
+      <h3>Movimento + consistência</h3>
+      <p>O plano combina treino e dieta. Você só precisa executar o básico por tempo suficiente.</p>
+      <div class="img">
+        <img src="${img}" alt="Exercício" loading="lazy" />
+      </div>
+    </aside>
+  `;
+}
+
+/* ===== Render ===== */
+function render(){
+  updateTopbar();
+  const q = quiz[state.index];
+
+  backBtn.disabled = (state.index === 0 || q.type === "gen_email"); // gen_email não volta (reduz drop-off)
+  continueBtn.style.display = "none";
+  hint.textContent = "";
+
+  if(q.type === "single") return renderSingle(q);
+  if(q.type === "multi") return renderMulti(q);
+  if(q.type === "consent") return renderConsent(q);
+  if(q.type === "metrics") return renderMetrics(q);
+  if(q.type === "bmi_info") return renderBmiInfo(q);
+  if(q.type === "goaldate") return renderGoalDate(q);
+  if(q.type === "target") return renderTarget(q);
+  if(q.type === "gen_email") return renderGenEmail(q);
+  if(q.type === "email") return renderEmail(q);
+}
+
+/* ===== Single ===== */
+function renderSingle(q){
+  hint.textContent = "Escolha 1 opção (avança automaticamente).";
+  const current = getAnswer(q.id) || "";
+
+  const optsHtml = q.options.map(o => {
+    const selected = current === o.key;
+    const hasMedia = !!q.media;
+    const imgSrc = hasMedia ? (BODY_GOAL_IMAGES[o.key] || "") : "";
+    return `
+      <div class="opt ${selected ? "selected": ""} ${hasMedia ? "has-media": ""}" data-key="${o.key}">
+        ${hasMedia ? `<div class="thumb">${imgSrc ? `<img src="${imgSrc}" alt="" loading="lazy"/>` : ""}</div>` : ""}
+        <div class="mark radio"><div class="dot"></div></div>
+        <div class="label">
+          <strong>${o.label}</strong>
+          ${o.sub ? `<span>${o.sub}</span>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+        <div class="options" id="options">${optsHtml}</div>
+      </div>
+      ${shouldShowSide() ? sideCardHtml() : ""}
+    </div>
+  `;
+
+  document.getElementById("options").addEventListener("click", (e)=>{
+    const item = e.target.closest(".opt");
+    if(!item) return;
+    const key = item.dataset.key;
+    setAnswer(q.id, key);
+    goNext();
+  });
+}
+
+/* ===== Multi ===== */
+function renderMulti(q){
+  const current = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
+  hint.textContent = "Marque e clique em Continuar.";
+
+  const optsHtml = q.options.map(o => {
+    const selected = current.includes(o.key);
+    return `
+      <div class="opt ${selected ? "selected": ""}" data-key="${o.key}">
+        <div class="mark check"><div class="tick"></div></div>
+        <div class="label">
+          <strong>${o.label}</strong>
+          ${o.sub ? `<span>${o.sub}</span>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+        <div class="options" id="options">${optsHtml}</div>
+        <div class="tiny">Mínimo: ${q.min ?? 0}.</div>
+      </div>
+      ${shouldShowSide() ? sideCardHtml() : ""}
+    </div>
+  `;
+
+  const optionsEl = document.getElementById("options");
+  optionsEl.addEventListener("click", (e)=>{
+    const item = e.target.closest(".opt");
+    if(!item) return;
+    const key = item.dataset.key;
+
+    let arr = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
+    const idx = arr.indexOf(key);
+    if(idx >= 0) arr.splice(idx,1); else arr.push(key);
+
+    if(key === "none" && arr.includes("none")) arr = ["none"];
+    else arr = arr.filter(x => x !== "none" || arr.length === 1);
+
+    setAnswer(q.id, arr);
+    render();
+  });
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Continuar";
+  continueBtn.disabled = !isAnswered(q);
+  continueBtn.onclick = () => {
+    if(!isAnswered(q)) return;
+    goNext();
+  };
+}
+
+/* ===== Consent ===== */
+function renderConsent(q){
+  hint.textContent = "Marque as duas caixas.";
+  const val = getAnswer(q.id) || { truth:false, terms:false };
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+        <div class="field">
+          <label><input id="truth" type="checkbox" ${val.truth ? "checked": ""} /> Declaro que estou dizendo a verdade.</label>
+          <label style="margin-top:10px;"><input id="terms" type="checkbox" ${val.terms ? "checked": ""} /> Concordo que isso não substitui acompanhamento profissional.</label>
+        </div>
+      </div>
+      ${shouldShowSide() ? sideCardHtml() : ""}
+    </div>
+  `;
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Continuar";
+
+  const truth = document.getElementById("truth");
+  const terms = document.getElementById("terms");
+  const sync = () => {
+    setAnswer(q.id, { truth: !!truth.checked, terms: !!terms.checked });
+    continueBtn.disabled = !isAnswered(q);
+  };
+  truth.addEventListener("change", sync);
+  terms.addEventListener("change", sync);
+  sync();
+
+  continueBtn.onclick = () => {
+    if(!isAnswered(q)) return;
+    goNext();
+  };
+}
+
+/* ===== Metrics ===== */
+function renderMetrics(q){
+  hint.textContent = "Preencha altura e peso.";
+  const a = getAnswer(q.id) || { heightCm:"", weightKg:"" };
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+
+        <div class="field">
+          <label>Altura (cm)</label>
+          <input id="h" type="number" min="80" max="250" step="0.1" placeholder="Ex.: 175" value="${a.heightCm ?? ""}" />
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="field">
+          <label>Peso atual (kg)</label>
+          <input id="w" type="number" min="20" max="400" step="0.1" placeholder="Ex.: 82.5" value="${a.weightKg ?? ""}" />
+        </div>
+
+        <div class="bmiWrap" id="bmiBox" style="display:none;">
+          <div class="bmiTop">
+            <div class="bmiVal" id="bmiVal"></div>
+            <div class="bmiCat" id="bmiCat"></div>
+          </div>
+          <div class="bmiBar">
+            <div class="seg under"></div>
+            <div class="seg normal"></div>
+            <div class="seg over"></div>
+            <div class="seg obese"></div>
+            <div class="bmiMarker" id="bmiMarker"></div>
+          </div>
+          <div class="tiny" id="bmiNote" style="margin-top:10px; color: rgba(255,255,255,.75);"></div>
+        </div>
+      </div>
+      ${shouldShowSide() ? sideCardHtml() : ""}
+    </div>
+  `;
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Continuar";
+
+  const hEl = document.getElementById("h");
+  const wEl = document.getElementById("w");
+  const bmiBox = document.getElementById("bmiBox");
+  const bmiValEl = document.getElementById("bmiVal");
+  const bmiCatEl = document.getElementById("bmiCat");
+  const bmiMarkerEl = document.getElementById("bmiMarker");
+  const bmiNoteEl = document.getElementById("bmiNote");
+
+  const sync = () => {
+    const h = parseFloat(hEl.value);
+    const w = parseFloat(wEl.value);
+    setAnswer(q.id, { heightCm: h, weightKg: w });
+
+    const ok = isAnswered(q);
+    continueBtn.disabled = !ok;
+
+    if(ok){
+      const bmi = bmiFrom(h, w);
+      const cat = bmiCategory(bmi);
+      bmiBox.style.display = "block";
+      bmiValEl.textContent = `IMC: ${bmi.toFixed(1)}`;
+      bmiCatEl.textContent = `Categoria: ${cat.label}`;
+      bmiMarkerEl.style.left = `${bmiMarkerPct(bmi)}%`;
+      bmiNoteEl.textContent = bmiMessage(bmi);
+    } else {
+      bmiBox.style.display = "none";
+    }
+  };
+
+  hEl.addEventListener("input", sync);
+  wEl.addEventListener("input", sync);
+  sync();
+
+  continueBtn.onclick = () => {
+    if(!isAnswered(q)) return;
+    goNext();
+  };
+}
+
+/* ===== BMI Info ===== */
+function renderBmiInfo(q){
+  const m = getAnswer("metrics") || {};
+  const bmi = bmiFrom(m.heightCm, m.weightKg);
+  const cat = bmi ? bmiCategory(bmi) : { key:"normal", label:"—" };
+  const risks = bmi ? bmiRisksText(bmi) : [];
+
+  hint.textContent = "Clique em Continuar.";
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+
+        <div class="bmiWrap">
+          <div class="bmiTop">
+            <div class="bmiVal">${bmi ? `IMC: ${bmi.toFixed(1)}` : "IMC: —"}</div>
+            <div class="bmiCat">Categoria: ${cat.label}</div>
+          </div>
+          <div class="bmiBar" style="${bmi ? "" : "opacity:.5"}">
+            <div class="seg under"></div>
+            <div class="seg normal"></div>
+            <div class="seg over"></div>
+            <div class="seg obese"></div>
+            <div class="bmiMarker" style="left:${bmi ? bmiMarkerPct(bmi) : 0}%;"></div>
+          </div>
+
+          <div style="margin-top:12px; color: rgba(255,255,255,.85); font-size:13px; line-height:1.5;">
+            <strong>Possíveis riscos (tendência)</strong>
+            <ul style="margin:8px 0 0; padding-left:18px; color: rgba(255,255,255,.78);">
+              ${risks.map(r => `<li style="margin:6px 0;">${escapeHtml(r)}</li>`).join("")}
+            </ul>
+            <div style="margin-top:10px; color: rgba(255,255,255,.62); font-size:13px;">
+              O seu plano final combina <strong>treino + dieta</strong> com base nas respostas.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>${bmiSilhouette(cat.key)}</div>
+    </div>
+  `;
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Continuar";
+  continueBtn.disabled = false;
+  continueBtn.onclick = () => goNext();
+}
+
+/* ===== Goal Date ===== */
+function renderGoalDate(q){
+  hint.textContent = "Escolha a data e clique em Continuar.";
+  const val = getAnswer(q.id) || { date:"" };
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+        <div class="field">
+          <label>Data</label>
+          <input id="dt" type="date" value="${val.date || ""}" />
+        </div>
+      </div>
+      ${shouldShowSide() ? sideCardHtml() : ""}
+    </div>
+  `;
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Continuar";
+  const dt = document.getElementById("dt");
+
+  const sync = () => {
+    setAnswer(q.id, { date: dt.value || "" });
+    continueBtn.disabled = !isAnswered(q);
+  };
+  dt.addEventListener("input", sync);
+  sync();
+
+  continueBtn.onclick = () => {
+    if(!isAnswered(q)) return;
+    goNext();
+  };
+}
+
+/* ===== Target ===== */
+function renderTarget(q){
+  hint.textContent = "Digite e clique em Continuar.";
+  const val = getAnswer(q.id) || { targetWeightKg:"" };
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+        <div class="field">
+          <label>Peso alvo (kg)</label>
+          <input id="tw" type="number" min="20" max="400" step="0.1" placeholder="Ex.: 75" value="${val.targetWeightKg ?? ""}" />
+        </div>
+      </div>
+      ${shouldShowSide() ? sideCardHtml() : ""}
+    </div>
+  `;
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Continuar";
+  const tw = document.getElementById("tw");
+
+  const sync = () => {
+    const t = parseFloat(tw.value);
+    if(isFinite(t)) setAnswer(q.id, { targetWeightKg: t });
+    else setAnswer(q.id, { targetWeightKg: NaN });
+    continueBtn.disabled = !isAnswered(q);
+  };
+  tw.addEventListener("input", sync);
+  sync();
+
+  continueBtn.onclick = () => {
+    if(!isAnswered(q)) return;
+    goNext(); // vai para gen_email
+  };
+}
+
+/* ===== ✅ TELA: "SEU PLANO ESTÁ SENDO GERADO" (máximo 5s) ===== */
+let genTimer = null;
+function renderGenEmail(q){
+  // Bloqueia ação manual (menos drop-off)
+  hint.textContent = "";
+  continueBtn.style.display = "none";
+
+  content.innerHTML = `
+    <div class="q">
+      <div class="genWrap">
+        <h2 class="bigTitle">SEU PLANO ESTÁ SENDO GERADO</h2>
+        <p class="genSub">
+          Estamos montando seu plano de <strong>treino + dieta</strong> com base nas suas respostas.
+        </p>
+
+        <div class="genBarWrap">
+          <div class="genBar" id="genBar"></div>
+        </div>
+
+        <div class="genMeta">
+          <span id="genLeft">0%</span>
+          <span>Preparando próxima etapa…</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // duração máxima 5s, suave (4.2s por padrão)
+  const MAX_MS = 4200;
+  const start = performance.now();
+  const barEl = document.getElementById("genBar");
+  const leftEl = document.getElementById("genLeft");
+
+  if(genTimer) cancelAnimationFrame(genTimer);
+
+  const tick = (t) => {
+    const elapsed = t - start;
+    const p = Math.min(1, elapsed / MAX_MS);
+    const pct = Math.round(p * 100);
+    barEl.style.width = pct + "%";
+    leftEl.textContent = pct + "%";
+    if(p < 1){
+      genTimer = requestAnimationFrame(tick);
+    } else {
+      // vai automaticamente para tela de email
+      goNext();
+    }
+  };
+  genTimer = requestAnimationFrame(tick);
+}
+
+/* ===== Email ===== */
+function renderEmail(q){
+  hint.textContent = "Digite e confirme.";
+  const val = getAnswer(q.id) || "";
+
+  content.innerHTML = `
+    <div class="grid">
+      <div class="q">
+        <div class="q-title">${q.title}</div>
+        ${q.help ? `<p class="q-help">${q.help}</p>` : ""}
+
+        <div class="field">
+          <label>E-mail</label>
+          <input id="em" type="email" placeholder="seunome@email.com" value="${escapeHtml(val)}" />
+        </div>
+
+        <div style="height:10px"></div>
+
+        <div class="field">
+          <label style="margin-bottom:0;">
+            <input id="confirm" type="checkbox" />
+            Confirmo que este é meu e-mail para receber o plano.
+          </label>
+          <div class="tiny" style="margin-top:8px;">
+            Ao confirmar, você será redirecionado automaticamente.
+          </div>
+        </div>
+      </div>
+      <aside class="side">
+        <h3>Último passo</h3>
+        <p>O plano será enviado para o e-mail informado.</p>
+        <div class="img">
+          <img src="${EXERCISE_IMAGES[0]}" alt="Exercício" loading="lazy" />
+        </div>
+      </aside>
+    </div>
+  `;
+
+  continueBtn.style.display = "inline-flex";
+  continueBtn.textContent = "Confirmar";
+
+  const em = document.getElementById("em");
+  const confirm = document.getElementById("confirm");
+
+  const sync = () => {
+    setAnswer(q.id, em.value);
+    const ok = isAnswered(q) && confirm.checked;
+    continueBtn.disabled = !ok;
+  };
+  em.addEventListener("input", sync);
+  confirm.addEventListener("change", sync);
+  sync();
+
+  continueBtn.onclick = () => {
+    const ok = isAnswered(q) && confirm.checked;
+    if(!ok) return;
+
+    // ✅ direto para o checkout
+    if(CHECKOUT_URL && CHECKOUT_URL.startsWith("http")){
+      window.location.href = CHECKOUT_URL;
+    } else {
+      alert("Você ainda não configurou o CHECKOUT_URL.");
+    }
+  };
+}
+
+/* ===== Navegação ===== */
+function goNext(){
+  if(state.index < quiz.length - 1){
+    state.index += 1;
+    render();
+  } else {
+    // fim — não mostra plano, não mostra telas extras
+    // (segurança: se chegar aqui, tenta ir para checkout)
+    if(CHECKOUT_URL && CHECKOUT_URL.startsWith("http")){
+      window.location.href = CHECKOUT_URL;
+    }
+  }
+}
+function goBack(){
+  const q = quiz[state.index];
+  if(q && q.type === "gen_email") return; // sem voltar nessa tela
+  if(state.index > 0){
+    state.index -= 1;
+    render();
+  }
+}
+
+/* ===== Utils ===== */
+function escapeHtml(str){
+  if(str === null || str === undefined) return "";
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* ===== Eventos ===== */
+backBtn.addEventListener("click", goBack);
+
+/* ===== Init ===== */
+render();
+</script>
+</body>
+</html>
