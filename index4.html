@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz — Plano de Treino + Dieta</title>
+
+  <!-- ✅ FAVICON (troque a URL abaixo) -->
+  <link rel="icon" type="image/png" href="FAVICON_URL_AQUI" />
+
+  <style>
+    :root{
+      --bg:#000;
+      --text:#fff;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --border:rgba(255,255,255,.12);
+      --border2:rgba(255,255,255,.18);
+      --shadow: 0 18px 60px rgba(0,0,0,.65);
+      --radius:18px;
+      --max:860px;
+
+      /* IMC */
+      --bmi-under:#38bdf8;
+      --bmi-normal:#22c55e;
+      --bmi-over:#f59e0b;
+      --bmi-obese:#ef4444;
+
+      --star:#facc15; /* ✅ estrelas amarelas */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(1000px 520px at 50% -10%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(700px 420px at 20% 0%, rgba(255,255,255,.05), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    /* topbar */
+    .topbar{
+      position:fixed; top:0; left:0; right:0;
+      padding:14px 16px;
+      background: linear-gradient(180deg, rgba(0,0,0,.92), rgba(0,0,0,.58));
+      border-bottom:1px solid var(--border);
+      backdrop-filter: blur(10px);
+      z-index:10;
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      display:flex; gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .meta{display:flex; flex-direction:column; gap:2px; min-width:200px;}
+    .meta .step{font-size:13px; color:var(--muted2);}
+    .meta .title{font-size:14px; font-weight:900; letter-spacing:.2px;}
+    .bar-wrap{
+      flex:1;
+      height:10px;
+      background: rgba(255,255,255,.07);
+      border:1px solid var(--border);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background: rgba(255,255,255,.85);
+      border-radius:999px;
+      transition: width .28s ease;
+    }
+    .pct{
+      min-width:60px;
+      text-align:right;
+      font-variant-numeric: tabular-nums;
+      color:var(--muted2);
+      font-size:13px;
+    }
+
+    /* layout */
+    .wrap{min-height:100%; display:grid; place-items:center; padding:92px 16px 18px;}
+    .card{
+      width:100%;
+      max-width:var(--max);
+      background: rgba(10,10,10,.86);
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-inner{padding:22px 20px;}
+    .kicker{color:var(--muted2); font-size:13px; letter-spacing:.2px;}
+    h1{margin:10px 0 10px; font-size:26px; line-height:1.12;}
+    .desc{margin:0 0 14px; color:var(--muted);}
+
+    /* ✅ centraliza perguntas */
+    .q{
+      margin-top:10px;
+      padding-top:16px;
+      border-top:1px solid var(--border);
+      max-width:720px;
+      margin-left:auto;
+      margin-right:auto;
+      text-align:center;
+    }
+    .q-title{font-size:18px; font-weight:950; margin:0 0 8px;}
+    .q-help{margin:0 0 12px; color:var(--muted); font-size:14px;}
+
+    .options{
+      display:grid;
+      gap:10px;
+      margin:12px auto 6px;
+      max-width:720px;
+    }
+    .opt{
+      display:flex;
+      gap:12px;
+      padding:13px 14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+      transition: background .14s ease, border-color .14s ease, transform .06s ease;
+      user-select:none;
+      align-items:center;
+      min-height:56px;
+      text-align:left;
+    }
+    .opt:hover{background: rgba(255,255,255,.05); border-color: var(--border2);}
+    .opt:active{transform:scale(.995);}
+    .opt.selected{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.28);
+      outline: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* ✅ opção com mídia (corpo/objetivo/lesões) */
+    .opt.has-media{
+      display:grid;
+      grid-template-columns: 84px 22px 1fr;
+      gap:12px;
+      align-items:center;
+    }
+    .thumb{
+      width:84px; height:84px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+    }
+    .thumb img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: grayscale(1) contrast(1.05);
+      opacity:.92;
+    }
+
+    /* marcador */
+    .mark{
+      width:18px; height:18px;
+      border:1.5px solid rgba(255,255,255,.55);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+      background: rgba(0,0,0,.15);
+    }
+    .mark.radio{border-radius:999px;}
+    .mark.check{border-radius:4px;}
+    .dot{
+      width:8px; height:8px;
+      border-radius:999px;
+      background: rgba(255,255,255,.92);
+      opacity:0;
+      transition: opacity .12s ease;
+    }
+    .tick{
+      width:10px; height:10px;
+      border-right:2px solid rgba(255,255,255,.95);
+      border-bottom:2px solid rgba(255,255,255,.95);
+      transform: rotate(45deg) translateY(-1px);
+      opacity:0;
+      transition: opacity .12s ease;
+    }
+    .opt.selected .dot{opacity:1;}
+    .opt.selected .tick{opacity:1;}
+    .label{display:flex; flex-direction:column; gap:3px; min-width:0;}
+    .label strong{font-weight:950;}
+    .label span{color:var(--muted2); font-size:13px;}
+
+    /* actions */
+    .actions{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:center;
+      margin-top: 12px;
+      max-width:720px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .left-actions,.right-actions{display:flex; gap:10px; align-items:center;}
+    button{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:950;
+      transition: background .14s ease, border-color .14s ease, transform .06s ease;
+      white-space:nowrap;
+    }
+    button:hover{background: rgba(255,255,255,.09); border-color: var(--border2);}
+    button:active{transform: scale(.995);}
+    button.primary{
+      background: rgba(255,255,255,.92);
+      color:#000;
+      border-color: rgba(255,255,255,.35);
+    }
+    button:disabled{opacity:.45; cursor:not-allowed;}
+    .tiny{color:var(--muted2); font-size:13px;}
+
+    /* inputs */
+    .field{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:14px;
+      text-align:left;
+      max-width:520px;
+      margin:0 auto;
+    }
+    .field label{
+      display:block;
+      font-size:13px;
+      color: var(--muted2);
+      margin-bottom:8px;
+      font-weight:950;
+    }
+    input[type="number"], input[type="date"], input[type="email"]{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      color: var(--text);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+    }
+    input:focus{
+      border-color: rgba(255,255,255,.28);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+    }
+    .error{
+      max-width:520px;
+      margin:10px auto 0;
+      color: rgba(255,255,255,.88);
+      font-size:13px;
+      border:1px solid rgba(239,68,68,.35);
+      background: rgba(239,68,68,.08);
+      border-radius:14px;
+      padding:10px 12px;
+      display:none;
+      text-align:left;
+    }
+
+    /* ✅ bloco motivacional a cada 3 perguntas */
+    .motivate{
+      max-width:720px;
+      margin:14px auto 0;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 128px 1fr;
+      gap:0;
+      text-align:left;
+    }
+    .motivate .img{
+      width:128px; height:128px;
+      border-right:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.25);
+      overflow:hidden;
+    }
+    .motivate .img img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: grayscale(1) contrast(1.05);
+      opacity:.92;
+    }
+    .motivate .copy{
+      padding:12px 14px;
+      display:grid;
+      gap:6px;
+      align-content:center;
+    }
+    .motivate .copy b{font-weight:950;}
+    .motivate .copy p{margin:0; color:rgba(255,255,255,.74); font-size:13px; line-height:1.45;}
+
+    @media(max-width: 520px){
+      .meta{min-width:auto}
+      .card-inner{padding:18px 14px;}
+      .actions{flex-direction:column; align-items:stretch;}
+      .left-actions,.right-actions{justify-content:space-between;}
+      button{width:100%;}
+      .right-actions{flex-direction:column; align-items:stretch;}
+      .right-actions .tiny{order:2; text-align:center;}
+      .motivate{grid-template-columns: 1fr;}
+      .motivate .img{width:100%; height:160px; border-right:none; border-bottom:1px solid rgba(255,255,255,.10);}
+      .opt.has-media{grid-template-columns: 76px 22px 1fr;}
+      .thumb{width:76px; height:76px;}
+    }
+
+    /* BMI box */
+    .bmiWrap{
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:14px;
+      margin-top:12px;
+      max-width:720px;
+      margin-left:auto;
+      margin-right:auto;
+      text-align:left;
+    }
+    .bmiTop{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;}
+    .bmiTop .bmiVal{font-size:16px; font-weight:950; letter-spacing:.2px;}
+    .bmiTop .bmiCat{font-size:13px; color:var(--muted); font-weight:950;}
+    .bmiBar{
+      margin-top:12px;
+      position:relative;
+      height:14px;
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      display:flex;
+    }
+    .seg{height:100%;}
+    .seg.under{width:18%; background: var(--bmi-under);}
+    .seg.normal{width:24%; background: var(--bmi-normal);}
+    .seg.over{width:24%; background: var(--bmi-over);}
+    .seg.obese{width:34%; background: var(--bmi-obese);}
+    .bmiMarker{
+      position:absolute; top:-6px;
+      width:2px; height:26px;
+      background:#fff;
+      box-shadow: 0 0 0 3px rgba(0,0,0,.25);
+      left:0%;
+      transform: translateX(-1px);
+    }
+
+    /* ✅ IMC com imagem do estado atual */
+    .bmiGrid{
+      display:grid;
+      grid-template-columns: 1fr 160px;
+      gap:12px;
+      align-items:start;
+    }
+    .bmiImg{
+      width:160px; height:160px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(0,0,0,.25);
+    }
+    .bmiImg img{
+      width:100%; height:100%;
+      object-fit:cover;
+      filter: grayscale(1) contrast(1.05);
+      opacity:.92;
+    }
+    @media(max-width:520px){
+      .bmiGrid{grid-template-columns:1fr;}
+      .bmiImg{width:100%; height:200px;}
+    }
+
+    /* gráfico */
+    .chartWrap{
+      max-width:720px;
+      margin:14px auto 0;
+      text-align:left;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:12px;
+    }
+    canvas{width:100%; height:220px; display:block;}
+    .chartMeta{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:10px;
+      color: rgba(255,255,255,.70);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    /* carregamento */
+    .genWrap{display:grid; gap:14px; padding:12px 0 2px; max-width:720px; margin:0 auto; text-align:left;}
+    .bigTitle{
+      font-size:40px;
+      font-weight:1000;
+      letter-spacing:.6px;
+      line-height:1.05;
+      margin:0;
+      text-transform:uppercase;
+    }
+    @media(max-width: 680px){ .bigTitle{font-size:30px;} }
+    .genSub{margin:0; color: rgba(255,255,255,.70); font-size:14px; line-height:1.5; max-width:60ch;}
+    .genBarWrap{height:14px; border-radius:999px; border:1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); overflow:hidden;}
+    .genBar{height:100%; width:0%; background: rgba(255,255,255,.88); border-radius:999px; transition: width .12s linear;}
+    .genMeta{display:flex; justify-content:space-between; gap:10px; color: rgba(255,255,255,.55); font-size:12px;}
+
+    /* ✅ avaliações estilo “comentário”: texto branco + estrelas amarelas */
+    .ticker{
+      margin-top:8px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:10px 12px;
+      overflow:hidden;
+      position:relative;
+    }
+    .tickerRow{display:flex; gap:16px; white-space:nowrap; will-change: transform; transform: translateX(0);}
+    .comment{
+      display:inline-flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25);
+      color:#fff;
+      min-width: 320px;
+    }
+    .avatar{
+      width:34px; height:34px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      display:grid;
+      place-items:center;
+      font-weight:950;
+      color: rgba(255,255,255,.85);
+      flex: 0 0 auto;
+    }
+    .cBody{display:flex; flex-direction:column; gap:6px;}
+    .cTop{display:flex; gap:10px; align-items:center; justify-content:space-between;}
+    .cTop b{font-weight:950;}
+    .stars{color: var(--star); letter-spacing:1px;}
+    .cText{color: rgba(255,255,255,.88); font-size:12.5px; line-height:1.45;}
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="meta">
+        <div class="step" id="stepText">Progresso</div>
+        <div class="title" id="topTitle">Plano de Treino + Dieta</div>
+      </div>
+      <div class="bar-wrap"><div class="bar" id="bar"></div></div>
+      <div class="pct" id="pct">0%</div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="card-inner">
+        <div class="kicker">Questionário rápido (personalização total)</div>
+        <h1 id="headline">Monte seu Plano de Treino + Dieta</h1>
+        <p class="desc" id="desc">
+          Responda para calibrar: nível, rotina, recuperação, metabolismo percebido e objetivo..
+        </p>
+
+        <div id="content"></div>
+
+        <div class="actions" id="actions">
+          <div class="left-actions">
+            <button id="backBtn">Voltar</button>
+          </div>
+          <div class="right-actions">
+            <span class="tiny" id="hint"></span>
+            <button class="primary" id="continueBtn" style="display:none;">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const CHECKOUT_URL = "https://SEU-LINK-DA-PERFECTPAY-AQUI";
+
+    /* ✅ imagens ilustrativas (troque pelos seus assets) */
+    const BODY_IMAGES = {
+      /* objetivo */
+      goal_lean:     "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=900&q=80",
+      goal_athletic: "https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?auto=format&fit=crop&w=900&q=80",
+      goal_muscle:   "https://images.unsplash.com/photo-1517838277536-f5f99be501b9?auto=format&fit=crop&w=900&q=80",
+      goal_strength: "https://images.unsplash.com/photo-1599058917212-d750089bc07d?auto=format&fit=crop&w=900&q=80",
+
+      /* corpo atual */
+      body_slim:     "https://images.unsplash.com/photo-1526401485004-2fda9f1b95b8?auto=format&fit=crop&w=900&q=80",
+      body_average:  "https://images.unsplash.com/photo-1526403226-49d708e5d2f2?auto=format&fit=crop&w=900&q=80",
+      body_over:     "https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?auto=format&fit=crop&w=900&q=80",
+      body_athletic: "https://images.unsplash.com/photo-1549476464-37392f717541?auto=format&fit=crop&w=900&q=80",
+    };
+
+    const INJURY_IMAGES = {
+      none:     "https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=900&q=80",
+      knee:     "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80",
+      back:     "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=900&q=80",
+      shoulder: "https://images.unsplash.com/photo-1546484959-f9a3c09d93b1?auto=format&fit=crop&w=900&q=80",
+      wrist:    "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=900&q=80",
+      other:    "https://images.unsplash.com/photo-1518611012118-f0c5d5f9e6f3?auto=format&fit=crop&w=900&q=80",
+    };
+
+    /* ✅ motivacional (a cada 3 perguntas) com corpo ideal em atividade */
+    const MOTIVATION = [
+      {
+        title:"Você não precisa de motivação. Precisa de rotina.",
+        text:"O plano é feito para caber no seu dia e evoluir com você. Um passo por vez, sem exagero.",
+        img:"https://images.unsplash.com/photo-1550345332-09e3ac987658?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        title:"Constância vence intensidade.",
+        text:"Resultado vem de repetir o básico. O plano ajusta volume e dieta para você sustentar.",
+        img:"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        title:"Seu corpo responde a sinais diários.",
+        text:"Treino + alimentação + sono. Se você alinha isso, o progresso aparece (mesmo devagar).",
+        img:"https://images.unsplash.com/photo-1599058917212-d750089bc07d?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        title:"O plano é pessoal. O esforço é seu.",
+        text:"Você só precisa executar o próximo treino e a próxima refeição. O resto é consequência.",
+        img:"https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&w=900&q=80"
+      },
+    ];
+
+    const TESTIMONIALS = [
+      { name:"Marina",  text:"Perdi 6kg em 10 semanas seguindo o plano.", stars:5 },
+      { name:"Carlos",  text:"Treino enxuto, consistência e resultado real.", stars:5 },
+      { name:"Letícia", text:"Meu foco era definição e encaixou perfeito na rotina.", stars:5 },
+      { name:"Rafael",  text:"Voltei a treinar sem dor ajustando as progressões.", stars:5 },
+      { name:"Bianca",  text:"Dieta simples e prática. Parei de me perder.", stars:5 },
+      { name:"Diego",   text:"Plano passou confiança: tudo com base no meu perfil.", stars:5 },
+    ];
+
+    const state = { index: 0, answers: {} };
+    const el = (id) => document.getElementById(id);
+    const content = el("content");
+    const backBtn = el("backBtn");
+    const continueBtn = el("continueBtn");
+    const bar = el("bar");
+    const pct = el("pct");
+    const hint = el("hint");
+    const clamp = (n,a,b) => Math.max(a, Math.min(b,n));
+
+    const quiz = [
+      { id:"goal", type:"single", title:"Qual é seu objetivo visual?", help:"Escolha 1 opção.", default:"goal_lean", media:"body",
+        options:[
+          { key:"goal_lean", label:"Mais definido", sub:"Seco / leve" },
+          { key:"goal_athletic", label:"Atlético", sub:"Estética + performance" },
+          { key:"goal_muscle", label:"Mais volume", sub:"Shape cheio" },
+          { key:"goal_strength", label:"Força", sub:"Movimentos difíceis" },
+        ]
+      },
+      { id:"age", type:"single", title:"Sua faixa de idade", help:"Escolha 1 opção.", default:"18-24",
+        options:[
+          { key:"13-17", label:"13–17", sub:"Base e técnica" },
+          { key:"18-24", label:"18–24", sub:"Progressão rápida" },
+          { key:"25-34", label:"25–34", sub:"Consistência" },
+          { key:"35-44", label:"35–44", sub:"Recuperação inteligente" },
+          { key:"45+", label:"45+", sub:"Progressão segura" },
+        ]
+      },
+      { id:"trained_before", type:"single", title:"Você já treinou de forma consistente antes?", help:"Escolha 1 opção.", default:"yes_some",
+        options:[
+          { key:"no", label:"Nunca", sub:"Vamos começar do básico" },
+          { key:"yes_some", label:"Já, mas parei", sub:"Retomar com progressão segura" },
+          { key:"yes_regular", label:"Sim, regularmente", sub:"Ajustar volume e performance" },
+        ]
+      },
+
+      { id:"body_current", type:"single", title:"Como está seu corpo hoje?", help:"Escolha 1 opção.", default:"body_average", media:"body",
+        options:[
+          { key:"body_slim", label:"Mais magro", sub:"Pouca massa" },
+          { key:"body_average", label:"Mediano", sub:"Normal" },
+          { key:"body_over", label:"Acima do peso", sub:"Gordura extra" },
+          { key:"body_athletic", label:"Já em forma", sub:"Quero performance" },
+        ]
+      },
+      { id:"days", type:"single", title:"Quantos dias/semana você treina?", help:"Escolha 1 opção.", default:"3",
+        options:[
+          { key:"2", label:"2 dias", sub:"Mínimo viável" },
+          { key:"3", label:"3 dias", sub:"Equilíbrio ideal" },
+          { key:"4", label:"4 dias", sub:"Evolução mais rápida" },
+          { key:"5+", label:"5+ dias", sub:"Alta disciplina" },
+        ]
+      },
+      { id:"session_time", type:"single", title:"Quanto tempo por treino?", help:"Escolha 1 opção.", default:"30-45",
+        options:[
+          { key:"15-25", label:"15–25 min", sub:"Enxuto" },
+          { key:"30-45", label:"30–45 min", sub:"Equilibrado" },
+          { key:"45-70", label:"45–70 min", sub:"Completo" },
+          { key:"70+", label:"70+ min", sub:"Longo" },
+        ]
+      },
+      { id:"level", type:"single", title:"Seu nível hoje", help:"Escolha 1 opção.", default:"beginner",
+        options:[
+          { key:"beginner", label:"Iniciante", sub:"0–6 meses" },
+          { key:"intermediate", label:"Intermediário", sub:"6–24 meses" },
+          { key:"advanced", label:"Avançado", sub:"2+ anos" },
+        ]
+      },
+
+      { id:"daily_energy", type:"single", title:"Como está sua energia durante o dia?", help:"Escolha 1 opção.", default:"ok",
+        options:[
+          { key:"low", label:"Baixa", sub:"Cansaço constante" },
+          { key:"ok", label:"Ok", sub:"Oscila, mas dá para ir" },
+          { key:"high", label:"Alta", sub:"Disposto quase sempre" },
+          { key:"roller", label:"Varia muito", sub:"Picos e quedas" },
+        ]
+      },
+      { id:"daily_focus", type:"single", title:"E sua mente/ânimo no dia a dia?", help:"Escolha 1 opção.", default:"normal",
+        options:[
+          { key:"stressed", label:"Estressado", sub:"Muita pressão/ansiedade" },
+          { key:"normal", label:"Normal", sub:"Dentro do esperado" },
+          { key:"motivated", label:"Motivado", sub:"Foco e constância" },
+          { key:"down", label:"Desanimado", sub:"Difícil manter rotina" },
+        ]
+      },
+      { id:"weight_loss_ease", type:"single", title:"Historicamente, para você, perder gordura é…", help:"Escolha 1 opção.", default:"medium",
+        options:[
+          { key:"easy", label:"Fácil", sub:"Responde rápido" },
+          { key:"medium", label:"Médio", sub:"Demora, mas acontece" },
+          { key:"hard", label:"Difícil", sub:"Pouca resposta" },
+          { key:"unknown", label:"Não sei", sub:"Nunca acompanhei" },
+        ]
+      },
+
+      { id:"diet_now", type:"single", title:"Como está sua alimentação hoje?", help:"Escolha 1 opção.", default:"mixed",
+        options:[
+          { key:"good", label:"Boa", sub:"Regular e organizada" },
+          { key:"mixed", label:"Mediana", sub:"Oscila durante a semana" },
+          { key:"messy", label:"Bagunçada", sub:"Muito improviso" },
+          { key:"low_app", label:"Apetite baixo", sub:"Pulo refeições" },
+        ]
+      },
+      { id:"protein_habit", type:"single", title:"Proteína no dia a dia", help:"Escolha 1 opção.", default:"some",
+        options:[
+          { key:"low", label:"Quase não consumo", sub:"Pouca" },
+          { key:"some", label:"Consumo às vezes", sub:"Moderada" },
+          { key:"good", label:"Consumo bem", sub:"Consistente" },
+          { key:"track", label:"Eu acompanho macros", sub:"Mais controle" },
+        ]
+      },
+
+      { id:"injuries", type:"multi", min:0, title:"Dores/lesões recorrentes?", help:"Marque o que aplica. Clique em Continuar.", default:["none"], media:"injury",
+        options:[
+          { key:"none", label:"Nenhuma", sub:"Sem restrições" },
+          { key:"knee", label:"Joelho", sub:"Ajustar agachamentos" },
+          { key:"back", label:"Lombar", sub:"Ajustar postura/carga" },
+          { key:"shoulder", label:"Ombro", sub:"Ajustar empurrar" },
+          { key:"wrist", label:"Punho", sub:"Ajustar apoios" },
+          { key:"other", label:"Outra", sub:"Considerar no plano" },
+        ]
+      },
+
+      { id:"sleep_hours", type:"single", title:"Horas de sono", help:"Escolha 1 opção.", default:"6-7",
+        options:[
+          { key:"<5", label:"< 5h", sub:"Recuperação baixa" },
+          { key:"5-6", label:"5–6h", sub:"Dá para melhorar" },
+          { key:"6-7", label:"6–7h", sub:"Ok" },
+          { key:"7-8", label:"7–8h", sub:"Bom" },
+          { key:"8+", label:"8h+", sub:"Ótimo" },
+        ]
+      },
+
+      { id:"consent", type:"consent", title:"Confirmação rápida", help:"Marque as duas caixas para continuar." },
+      { id:"metrics", type:"metrics", title:"Altura e peso", help:"Digite seus dados." },
+      { id:"bmi_info", type:"bmi_info", title:"Seu IMC e o que isso pode indicar", help:"Leitura rápida antes de continuar." },
+
+      { id:"goal_date", type:"goaldate", title:"Data do objetivo", help:"Já sugerimos uma data realista (6 meses). Você pode ajustar." },
+      { id:"target", type:"target", title:"Peso alvo (kg)", help:"Digite o peso alvo." },
+
+      { id:"projection", type:"projection", title:"Projeção de progresso", help:"Com base no peso atual, peso alvo e data." },
+      { id:"gen_email", type:"gen_email", title:"SEU PLANO ESTÁ SENDO GERADO", help:"Ajustando treino + dieta com base nas suas respostas." },
+      { id:"email", type:"email", title:"Digite seu e-mail para receber o plano", help:"Após confirmar, você será redirecionado." },
+    ];
+
+    function applyDefaultsOnce(){
+      for(const q of quiz){
+        if(state.answers[q.id] !== undefined) continue;
+        if(q.type === "single" && q.default) state.answers[q.id] = q.default;
+        if(q.type === "multi" && Array.isArray(q.default)) state.answers[q.id] = [...q.default];
+      }
+    }
+
+    function totalSteps(){ return quiz.length; }
+    function progressPct(){
+      const total = totalSteps();
+      const step = clamp(state.index, 0, total-1);
+      return total <= 1 ? 0 : Math.round((step / (total-1)) * 100);
+    }
+    function updateTopbar(){
+      const p = progressPct();
+      bar.style.width = p + "%";
+      pct.textContent = p + "%";
+      el("stepText").textContent = "Progresso";
+    }
+
+    function getAnswer(id){ return state.answers[id]; }
+    function setAnswer(id, val){ state.answers[id] = val; }
+
+    function isPastDate(iso){
+      const t = new Date(todayISO() + "T00:00:00").getTime();
+      const x = new Date(iso + "T00:00:00").getTime();
+      return x < t;
+    }
+
+    function isAnswered(q){
+      const a = getAnswer(q.id);
+      if(q.type === "single") return typeof a === "string" && a.length > 0;
+      if(q.type === "multi") return Array.isArray(a) && a.length >= (q.min ?? 0);
+      if(q.type === "consent") {
+        const c = a || {};
+        return !!c.truth && !!c.terms;
+      }
+      if(q.type === "metrics") {
+        const m = a || {};
+        return isFinite(m.heightCm) && isFinite(m.weightKg) && m.heightCm > 50 && m.heightCm < 260 && m.weightKg > 20 && m.weightKg < 400;
+      }
+      if(q.type === "goaldate") {
+        const d = a || {};
+        return typeof d.date === "string" && d.date.length >= 8 && !isPastDate(d.date);
+      }
+      if(q.type === "target") {
+        const t = a || {};
+        return isFinite(t.targetWeightKg) && t.targetWeightKg > 20 && t.targetWeightKg < 400;
+      }
+      if(q.type === "projection") return true;
+      if(q.type === "gen_email") return true;
+      if(q.type === "email") {
+        const s = String(a || "").trim();
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+      }
+      return true;
+    }
+
+    /* ===== IMC ===== */
+    function bmiFrom(heightCm, weightKg){
+      const h = heightCm / 100;
+      if(!isFinite(h) || h <= 0) return null;
+      return weightKg / (h*h);
+    }
+    function bmiCategory(bmi){
+      if(bmi < 18.5) return { key:"under", label:"Abaixo do peso" };
+      if(bmi < 25) return { key:"normal", label:"Peso normal" };
+      if(bmi < 30) return { key:"over", label:"Sobrepeso" };
+      return { key:"obese", label:"Obesidade" };
+    }
+    function bmiMarkerPct(bmi){
+      const min = 14, max = 45;
+      const clamped = clamp(bmi, min, max);
+      return ((clamped - min) / (max - min)) * 100;
+    }
+    function bmiRisksText(bmi){
+      const cat = bmiCategory(bmi);
+      if(cat.key === "under") return ["Possível baixa energia e fadiga","Menor reserva muscular","Recuperação pior se sono/dieta estiverem ruins"];
+      if(cat.key === "normal") return ["Risco geral mais baixo","Ainda depende de hábitos e sedentarismo","Foco: força + rotina"];
+      if(cat.key === "over") return ["Maior risco cardiometabólico ao longo do tempo","Pioras com sedentarismo e sono ruim","Foco: consistência e progressão"];
+      return ["Risco cardiometabólico mais alto ao longo do tempo","Pode impactar pressão, glicemia e sono (em muitos casos)","Foco: estratégia e constância"];
+    }
+
+    /* ===== Datas ===== */
+    function todayISO(){
+      const d = new Date();
+      d.setHours(0,0,0,0);
+      return d.toISOString().slice(0,10);
+    }
+    function addMonthsISO(baseISO, months){
+      const d = new Date(baseISO + "T00:00:00");
+      const day = d.getDate();
+      d.setMonth(d.getMonth() + months);
+      if(d.getDate() !== day) d.setDate(0);
+      return d.toISOString().slice(0,10);
+    }
+    function daysBetween(fromISO, toISO){
+      const a = new Date(fromISO + "T00:00:00").getTime();
+      const b = new Date(toISO + "T00:00:00").getTime();
+      return Math.max(0, Math.round((b - a) / (1000*60*60*24)));
+    }
+
+    /* ✅ motivação a cada 3 perguntas (sem poluir telas especiais) */
+    function shouldShowMotivation(q){
+      if(!q) return false;
+      const idx1 = state.index + 1;
+      if(idx1 % 3 !== 0) return false;
+
+      const block = new Set(["metrics","bmi_info","projection","gen_email","email","goaldate","target","consent"]);
+      if(block.has(q.type)) return false;
+
+      return true;
+    }
+    function motivationHtml(){
+      const pick = MOTIVATION[Math.floor(state.index/3) % MOTIVATION.length];
+      return `
+        <div class="motivate" role="note" aria-label="Mensagem motivacional">
+          <div class="img"><img src="${pick.img}" alt="Corpo ideal em atividade" loading="lazy"></div>
+          <div class="copy">
+            <b>${escapeHtml(pick.title)}</b>
+            <p>${escapeHtml(pick.text)}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function render(){
+      updateTopbar();
+      const q = quiz[state.index];
+
+      backBtn.disabled = (state.index === 0 || q.type === "gen_email");
+      continueBtn.style.display = "none";
+      hint.textContent = "";
+
+      if(q.type === "single") return renderSingle(q);
+      if(q.type === "multi") return renderMulti(q);
+      if(q.type === "consent") return renderConsent(q);
+      if(q.type === "metrics") return renderMetrics(q);
+      if(q.type === "bmi_info") return renderBmiInfo(q);
+      if(q.type === "goaldate") return renderGoalDate(q);
+      if(q.type === "target") return renderTarget(q);
+      if(q.type === "projection") return renderProjection(q);
+      if(q.type === "gen_email") return renderGenEmail(q);
+      if(q.type === "email") return renderEmail(q);
+    }
+
+    function renderSingle(q){
+      hint.textContent = "Escolha 1 opção (avança automaticamente).";
+      const current = getAnswer(q.id) || "";
+
+      const optsHtml = q.options.map(o => {
+        const selected = current === o.key;
+        const hasMedia = (q.media === "body");
+        const img = hasMedia ? (BODY_IMAGES[o.key] || "") : "";
+        return `
+          <div class="opt ${selected ? "selected": ""} ${hasMedia ? "has-media": ""}" data-key="${o.key}">
+            ${hasMedia ? `<div class="thumb">${img ? `<img src="${img}" alt="" loading="lazy">` : ""}</div>` : ""}
+            <div class="mark radio"><div class="dot"></div></div>
+            <div class="label">
+              <strong>${escapeHtml(o.label)}</strong>
+              ${o.sub ? `<span>${escapeHtml(o.sub)}</span>` : ""}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="options" id="options">${optsHtml}</div>
+          ${shouldShowMotivation(q) ? motivationHtml() : ""}
+        </div>
+      `;
+
+      el("options").addEventListener("click", (e)=>{
+        const item = e.target.closest(".opt");
+        if(!item) return;
+        const key = item.dataset.key;
+        setAnswer(q.id, key);
+        goNext(); // ✅ clicar até na selecionada avança
+      });
+    }
+
+    function renderMulti(q){
+      const current = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
+      hint.textContent = "Marque e clique em Continuar.";
+
+      const optsHtml = q.options.map(o => {
+        const selected = current.includes(o.key);
+        const hasMedia = (q.media === "injury");
+        const img = hasMedia ? (INJURY_IMAGES[o.key] || "") : "";
+        return `
+          <div class="opt ${selected ? "selected": ""} ${hasMedia ? "has-media": ""}" data-key="${o.key}">
+            ${hasMedia ? `<div class="thumb">${img ? `<img src="${img}" alt="" loading="lazy">` : ""}</div>` : ""}
+            <div class="mark check"><div class="tick"></div></div>
+            <div class="label">
+              <strong>${escapeHtml(o.label)}</strong>
+              ${o.sub ? `<span>${escapeHtml(o.sub)}</span>` : ""}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="options" id="options">${optsHtml}</div>
+          <div class="tiny">Mínimo: ${q.min ?? 0}.</div>
+          ${shouldShowMotivation(q) ? motivationHtml() : ""}
+        </div>
+      `;
+
+      el("options").addEventListener("click", (e)=>{
+        const item = e.target.closest(".opt");
+        if(!item) return;
+        const key = item.dataset.key;
+
+        let arr = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
+        const idx = arr.indexOf(key);
+        if(idx >= 0) arr.splice(idx,1); else arr.push(key);
+
+        if(key === "none" && arr.includes("none")) arr = ["none"];
+        else arr = arr.filter(x => x !== "none" || arr.length === 1);
+
+        setAnswer(q.id, arr);
+        render();
+      });
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+      continueBtn.disabled = !isAnswered(q);
+      continueBtn.onclick = () => { if(!isAnswered(q)) return; goNext(); };
+    }
+
+    function renderConsent(q){
+      hint.textContent = "Marque as duas caixas.";
+      const val = getAnswer(q.id) || { truth:false, terms:false };
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="field">
+            <label><input id="truth" type="checkbox" ${val.truth ? "checked": ""} /> Declaro que estou dizendo a verdade.</label>
+            <label style="margin-top:10px;"><input id="terms" type="checkbox" ${val.terms ? "checked": ""} /> Concordo que isso não substitui acompanhamento profissional.</label>
+          </div>
+        </div>
+      `;
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+
+      const truth = el("truth");
+      const terms = el("terms");
+      const sync = () => {
+        setAnswer(q.id, { truth: !!truth.checked, terms: !!terms.checked });
+        continueBtn.disabled = !isAnswered(q);
+      };
+      truth.addEventListener("change", sync);
+      terms.addEventListener("change", sync);
+      sync();
+
+      continueBtn.onclick = () => { if(!isAnswered(q)) return; goNext(); };
+    }
+
+    function renderMetrics(q){
+      hint.textContent = "Preencha altura e peso.";
+      const a = getAnswer(q.id) || { heightCm:"", weightKg:"" };
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="field">
+            <label>Altura (cm)</label>
+            <input id="h" type="number" min="80" max="250" step="0.1" placeholder="Ex.: 175" value="${escapeHtml(a.heightCm ?? "")}" />
+          </div>
+          <div style="height:10px"></div>
+          <div class="field">
+            <label>Peso atual (kg)</label>
+            <input id="w" type="number" min="20" max="400" step="0.1" placeholder="Ex.: 82.5" value="${escapeHtml(a.weightKg ?? "")}" />
+          </div>
+
+          <div class="bmiWrap" id="bmiBox" style="display:none; max-width:520px;">
+            <div class="bmiTop">
+              <div class="bmiVal" id="bmiVal"></div>
+              <div class="bmiCat" id="bmiCat"></div>
+            </div>
+            <div class="bmiBar">
+              <div class="seg under"></div>
+              <div class="seg normal"></div>
+              <div class="seg over"></div>
+              <div class="seg obese"></div>
+              <div class="bmiMarker" id="bmiMarker"></div>
+            </div>
+            <div class="tiny" id="bmiNote" style="margin-top:10px; color: rgba(255,255,255,.75);"></div>
+          </div>
+        </div>
+      `;
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+
+      const hEl = el("h");
+      const wEl = el("w");
+      const bmiBox = el("bmiBox");
+      const bmiValEl = el("bmiVal");
+      const bmiCatEl = el("bmiCat");
+      const bmiMarkerEl = el("bmiMarker");
+      const bmiNoteEl = el("bmiNote");
+
+      const sync = () => {
+        const h = parseFloat(hEl.value);
+        const w = parseFloat(wEl.value);
+        setAnswer(q.id, { heightCm: h, weightKg: w });
+
+        const ok = isAnswered(q);
+        continueBtn.disabled = !ok;
+
+        if(ok){
+          const bmi = bmiFrom(h, w);
+          const cat = bmiCategory(bmi);
+          bmiBox.style.display = "block";
+          bmiValEl.textContent = "IMC: " + bmi.toFixed(1);
+          bmiCatEl.textContent = "Categoria: " + cat.label;
+          bmiMarkerEl.style.left = bmiMarkerPct(bmi) + "%";
+          bmiNoteEl.textContent = (cat.key === "under") ? "Abaixo do peso. Ajuste por consistência." :
+                                (cat.key === "normal") ? "Faixa normal. Recomp + força." :
+                                (cat.key === "over") ? "Sobrepeso. Constância muda tudo." :
+                                "Obesidade. Estratégia e passo a passo.";
+        } else {
+          bmiBox.style.display = "none";
+        }
+      };
+
+      hEl.addEventListener("input", sync);
+      wEl.addEventListener("input", sync);
+      sync();
+
+      continueBtn.onclick = () => { if(!isAnswered(q)) return; goNext(); };
+    }
+
+    function renderBmiInfo(q){
+      hint.textContent = "Clique em Continuar.";
+      const m = getAnswer("metrics") || {};
+      const bmi = bmiFrom(m.heightCm, m.weightKg);
+      const cat = bmi ? bmiCategory(bmi) : { key:"normal", label:"—" };
+      const risks = bmi ? bmiRisksText(bmi) : [];
+
+      /* ✅ imagem representando estado atual: usa o body_current escolhido; fallback por categoria */
+      const bodyKey = getAnswer("body_current");
+      const img = BODY_IMAGES[bodyKey] ||
+                  (cat.key === "under" ? BODY_IMAGES.body_slim :
+                   cat.key === "normal" ? BODY_IMAGES.body_average :
+                   cat.key === "over" ? BODY_IMAGES.body_over :
+                   BODY_IMAGES.body_over);
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+
+          <div class="bmiWrap">
+            <div class="bmiGrid">
+              <div>
+                <div class="bmiTop">
+                  <div class="bmiVal">${bmi ? "IMC: " + bmi.toFixed(1) : "IMC: —"}</div>
+                  <div class="bmiCat">Categoria: ${escapeHtml(cat.label)}</div>
+                </div>
+
+                <div class="bmiBar" style="${bmi ? "" : "opacity:.5"}">
+                  <div class="seg under"></div>
+                  <div class="seg normal"></div>
+                  <div class="seg over"></div>
+                  <div class="seg obese"></div>
+                  <div class="bmiMarker" style="left:${bmi ? bmiMarkerPct(bmi) : 0}%;"></div>
+                </div>
+
+                <div style="margin-top:12px; color: rgba(255,255,255,.85); font-size:13px; line-height:1.5;">
+                  <strong>Possíveis riscos (tendência)</strong>
+                  <ul style="margin:8px 0 0; padding-left:18px; color: rgba(255,255,255,.78); text-align:left;">
+                    ${risks.map(r => `<li style="margin:6px 0;">${escapeHtml(r)}</li>`).join("")}
+                  </ul>
+                  <div style="margin-top:10px; color: rgba(255,255,255,.62); font-size:13px;">
+                    O plano final combina <strong>treino + dieta</strong> conforme seu perfil.
+                  </div>
+                </div>
+              </div>
+
+              <div class="bmiImg">
+                <img src="${img}" alt="Representação do estado atual" loading="lazy">
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+      continueBtn.disabled = false;
+      continueBtn.onclick = () => goNext();
+    }
+
+    function renderGoalDate(q){
+      hint.textContent = "Escolha a data e clique em Continuar.";
+
+      const existing = getAnswer(q.id);
+      if(!existing || !existing.date){
+        setAnswer(q.id, { date: addMonthsISO(todayISO(), 6) });
+      }
+
+      const val = getAnswer(q.id) || { date:"" };
+      const minDate = todayISO();
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="field">
+            <label>Data</label>
+            <input id="dt" type="date" min="${minDate}" value="${escapeHtml(val.date || "")}" />
+          </div>
+          <div class="error" id="dateErr">A data não pode ser no passado. Escolha uma data a partir de hoje.</div>
+        </div>
+      `;
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+
+      const dt = el("dt");
+      const err = el("dateErr");
+
+      const sync = () => {
+        const d = dt.value || "";
+        setAnswer(q.id, { date: d });
+        const past = d && isPastDate(d);
+        err.style.display = past ? "block" : "none";
+        continueBtn.disabled = !isAnswered(q);
+      };
+      dt.addEventListener("input", sync);
+      sync();
+
+      continueBtn.onclick = () => { if(!isAnswered(q)) return; goNext(); };
+    }
+
+    function renderTarget(q){
+      hint.textContent = "Digite e clique em Continuar.";
+      const val = getAnswer(q.id) || { targetWeightKg:"" };
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="field">
+            <label>Peso alvo (kg)</label>
+            <input id="tw" type="number" min="20" max="400" step="0.1" placeholder="Ex.: 75" value="${escapeHtml(val.targetWeightKg ?? "")}" />
+          </div>
+        </div>
+      `;
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+
+      const tw = el("tw");
+      const sync = () => {
+        const t = parseFloat(tw.value);
+        if(isFinite(t)) setAnswer(q.id, { targetWeightKg: t });
+        else setAnswer(q.id, { targetWeightKg: NaN });
+        continueBtn.disabled = !isAnswered(q);
+      };
+      tw.addEventListener("input", sync);
+      sync();
+
+      continueBtn.onclick = () => { if(!isAnswered(q)) return; goNext(); };
+    }
+
+    function renderProjection(q){
+      hint.textContent = "Clique em Continuar.";
+
+      const m = getAnswer("metrics") || {};
+      const t = getAnswer("target") || {};
+      const gd = getAnswer("goal_date") || {};
+
+      const w0 = Number(m.weightKg);
+      const w1 = Number(t.targetWeightKg);
+      const start = todayISO();
+      const end = gd.date || addMonthsISO(start, 6);
+
+      const days = daysBetween(start, end);
+      const weeks = Math.max(1, Math.round(days / 7));
+      const delta = (w0 - w1);
+      const kgPerWeek = delta / weeks;
+
+      const absRate = Math.abs(kgPerWeek);
+      let status = "Isso é possível.";
+      let note = "Projeção estimada — consistência e ajustes fazem diferença.";
+      if(delta <= 0){
+        status = "Isso é possível (ganho/recomposição).";
+        note = "Se a meta for ganhar peso/massa, o plano ajusta calorias e progressão.";
+      } else if(absRate > 1.25){
+        status = "É possível, mas pode exigir ajustes (meta agressiva).";
+        note = "Se ficar pesado, estender a data aumenta a sustentabilidade.";
+      } else if(absRate > 0.25){
+        status = "Isso é possível (ritmo realista).";
+        note = "Ritmo médio consistente tende a manter resultados.";
+      }
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+          <div class="chartWrap">
+            <div style="font-weight:950; letter-spacing:.2px;">${escapeHtml(status)}</div>
+            <div class="tiny" style="margin-top:6px;">${escapeHtml(note)}</div>
+            <div style="height:10px"></div>
+            <canvas id="chart" width="900" height="220" aria-label="Gráfico de projeção"></canvas>
+            <div class="chartMeta">
+              <div><b>Peso atual:</b> ${fmt1(w0)} kg</div>
+              <div><b>Peso alvo:</b> ${fmt1(w1)} kg</div>
+              <div><b>Prazo:</b> ${days} dias</div>
+              <div><b>Ritmo médio:</b> ${fmt1(kgPerWeek)} kg/sem</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      drawProjectionChart(el("chart"), start, end, w0, w1);
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Continuar";
+      continueBtn.disabled = false;
+      continueBtn.onclick = () => goNext();
+    }
+
+    function drawProjectionChart(canvas, startISO, endISO, w0, w1){
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      const pad = { l:42, r:18, t:16, b:34 };
+      const W = canvas.width - pad.l - pad.r;
+      const H = canvas.height - pad.t - pad.b;
+
+      ctx.globalAlpha = 0.35;
+      ctx.strokeStyle = "#fff";
+      ctx.lineWidth = 1;
+      for(let i=0;i<=4;i++){
+        const y = pad.t + (H*(i/4));
+        ctx.beginPath();
+        ctx.moveTo(pad.l, y);
+        ctx.lineTo(pad.l+W, y);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      const minY = Math.min(w0,w1) - 2;
+      const maxY = Math.max(w0,w1) + 2;
+      const yToPx = (w) => pad.t + (1 - ((w - minY) / (maxY - minY))) * H;
+
+      ctx.fillStyle = "rgba(255,255,255,.78)";
+      ctx.font = "12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      for(let i=0;i<=4;i++){
+        const v = maxY - ( (maxY-minY) * (i/4) );
+        const y = pad.t + (H*(i/4));
+        ctx.fillText(fmt1(v), 8, y+4);
+      }
+
+      ctx.strokeStyle = "rgba(255,255,255,.92)";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, yToPx(w0));
+      ctx.lineTo(pad.l+W, yToPx(w1));
+      ctx.stroke();
+
+      ctx.fillStyle = "rgba(255,255,255,.95)";
+      ctx.beginPath(); ctx.arc(pad.l, yToPx(w0), 5, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(pad.l+W, yToPx(w1), 5, 0, Math.PI*2); ctx.fill();
+
+      ctx.fillStyle = "rgba(255,255,255,.70)";
+      ctx.font = "12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
+      ctx.fillText(formatBRDate(startISO), pad.l, pad.t+H+24);
+      const endLabel = formatBRDate(endISO);
+      const endW = ctx.measureText(endLabel).width;
+      ctx.fillText(endLabel, pad.l+W-endW, pad.t+H+24);
+    }
+
+    function formatBRDate(iso){
+      const d = new Date(iso + "T00:00:00");
+      const dd = String(d.getDate()).padStart(2,"0");
+      const mm = String(d.getMonth()+1).padStart(2,"0");
+      const yy = d.getFullYear();
+      return dd + "/" + mm + "/" + yy;
+    }
+    function fmt1(n){
+      if(!isFinite(n)) return "—";
+      return (Math.round(n*10)/10).toFixed(1);
+    }
+
+    /* ===== Carregamento + ticker comentários ===== */
+    let genTimer = null;
+    let tickerRAF = null;
+
+    function renderGenEmail(q){
+      hint.textContent = "";
+      continueBtn.style.display = "none";
+
+      content.innerHTML = `
+        <div class="q" style="border-top:none; padding-top:0;">
+          <div class="genWrap">
+            <h2 class="bigTitle">SEU PLANO ESTÁ SENDO GERADO</h2>
+            <p class="genSub">Estamos montando seu plano com base no seu perfil (nível, rotina, recuperação, objetivo).</p>
+
+            <div class="genBarWrap"><div class="genBar" id="genBar"></div></div>
+            <div class="genMeta">
+              <span id="genLeft">0%</span>
+              <span>Validando detalhes e personalizando…</span>
+            </div>
+
+            <div class="ticker" aria-label="Avaliações de usuários">
+              <div class="tickerRow" id="tickerRow"></div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      const row = el("tickerRow");
+      row.innerHTML = buildCommentsHtml(TESTIMONIALS, 2);
+
+      let x = 0;
+      const speed = 0.55;
+      const animateTicker = () => {
+        x -= speed;
+        const half = row.scrollWidth / 2;
+        if(Math.abs(x) > half) x = 0;
+        row.style.transform = `translateX(${x}px)`;
+        tickerRAF = requestAnimationFrame(animateTicker);
+      };
+      if(tickerRAF) cancelAnimationFrame(tickerRAF);
+      tickerRAF = requestAnimationFrame(animateTicker);
+
+      const MAX_MS = 8500;
+      const start = performance.now();
+      const barEl = el("genBar");
+      const leftEl = el("genLeft");
+      if(genTimer) cancelAnimationFrame(genTimer);
+
+      const tick = (t) => {
+        const p = Math.min(1, (t - start) / MAX_MS);
+        const perc = Math.round(p * 100);
+        barEl.style.width = perc + "%";
+        leftEl.textContent = perc + "%";
+
+        if(p < 1) genTimer = requestAnimationFrame(tick);
+        else {
+          if(tickerRAF) cancelAnimationFrame(tickerRAF);
+          goNext();
+        }
+      };
+      genTimer = requestAnimationFrame(tick);
+    }
+
+    function buildCommentsHtml(list, repeat=1){
+      const stars = (n) => "★★★★★".slice(0, clamp(n,0,5));
+      let html = "";
+      for(let r=0;r<repeat;r++){
+        for(const t of list){
+          const initial = (t.name || "?").trim().slice(0,1).toUpperCase();
+          html += `
+            <div class="comment">
+              <div class="avatar">${escapeHtml(initial)}</div>
+              <div class="cBody">
+                <div class="cTop">
+                  <b>${escapeHtml(t.name)}</b>
+                  <span class="stars">${stars(t.stars)}</span>
+                </div>
+                <div class="cText">${escapeHtml(t.text)}</div>
+              </div>
+            </div>
+          `;
+        }
+      }
+      return html;
+    }
+
+    function renderEmail(q){
+      hint.textContent = "Digite e confirme.";
+      const val = getAnswer(q.id) || "";
+
+      content.innerHTML = `
+        <div class="q">
+          <div class="q-title">${escapeHtml(q.title)}</div>
+          ${q.help ? `<p class="q-help">${escapeHtml(q.help)}</p>` : ""}
+
+          <div class="field">
+            <label>E-mail</label>
+            <input id="em" type="email" placeholder="seunome@email.com" value="${escapeHtml(val)}" />
+          </div>
+
+          <div style="height:10px"></div>
+
+          <div class="field">
+            <label style="margin-bottom:0;">
+              <input id="confirm" type="checkbox" />
+              Confirmo que este é meu e-mail para receber o plano.
+            </label>
+            <div class="tiny" style="margin-top:8px;">Ao confirmar, você será redirecionado automaticamente.</div>
+          </div>
+        </div>
+      `;
+
+      continueBtn.style.display = "inline-flex";
+      continueBtn.textContent = "Confirmar";
+
+      const em = el("em");
+      const confirm = el("confirm");
+
+      const sync = () => {
+        setAnswer(q.id, em.value);
+        const ok = isAnswered(q) && confirm.checked;
+        continueBtn.disabled = !ok;
+      };
+
+      em.addEventListener("input", sync);
+      confirm.addEventListener("change", sync);
+      sync();
+
+      continueBtn.onclick = () => {
+        const ok = isAnswered(q) && confirm.checked;
+        if(!ok) return;
+        if(CHECKOUT_URL && CHECKOUT_URL.startsWith("http")) window.location.href = CHECKOUT_URL;
+        else alert("Você ainda não configurou o CHECKOUT_URL.");
+      };
+    }
+
+    function goNext(){
+      if(state.index < quiz.length - 1){
+        state.index += 1;
+        render();
+      } else {
+        if(CHECKOUT_URL && CHECKOUT_URL.startsWith("http")) window.location.href = CHECKOUT_URL;
+      }
+    }
+    function goBack(){
+      const q = quiz[state.index];
+      if(q && q.type === "gen_email") return;
+      if(state.index > 0){
+        state.index -= 1;
+        render();
+      }
+    }
+
+    function escapeHtml(str){
+      if(str === null || str === undefined) return "";
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    backBtn.addEventListener("click", goBack);
+
+    applyDefaultsOnce();
+    render();
+  </script>
+</body>
+</html>
