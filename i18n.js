@@ -3091,7 +3091,7 @@
         }
     };
 
-    let LANG = "pt";
+    let LANG = "es";
 
     function safeGet(obj, path) {
         let cur = obj;
@@ -3156,18 +3156,19 @@
     window.tMotivation = tMotivation;
 
 
-    function initLang() {
-        const stored = getStoredLang();
-        if (stored && LANGS.includes(stored)) LANG = stored;
+ function initLang() {
+        LANG = "es";
+        storeLang("es"); // opcional
+
         const sel = document.getElementById("langSelect");
         if (sel) {
             sel.value = LANG;
             sel.addEventListener("change", (e) => {
                 setLang(e.target.value);
-                // O quiz.js deve chamar render() novamente após trocar.
                 window.__quizRender?.();
             });
         }
+
         document.documentElement.lang = LANG;
     }
 
@@ -3190,4 +3191,5 @@
     window.tOpt = tOpt;
     window.tUI = tUI;
     window.i18nInitLang = initLang;
+
 })();
