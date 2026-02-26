@@ -14,7 +14,7 @@ function initI18n(cb) {
     if (typeof cb === "function") cb();
 }
 
-const CHECKOUT_URL = "https://SEU-LINK-DA-PERFECTPAY-AQUI";
+const CHECKOUT_URL = "https://pay.kiwify.com/zrUPXO1";
 
 /* ========= IMAGENS ========= */
 const BODY_IMAGES = {
@@ -1537,4 +1537,5 @@ function initQuiz() {
 // inicializa idioma e só então inicializa o quiz
 initI18n(() => {
     initQuiz();
+
 });
