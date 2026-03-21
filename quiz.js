@@ -215,106 +215,106 @@ const quiz = [
             { key: "5+", label: "5+ dias", sub: "Alta disciplina" },
         ]
     },
-    {
-        id: "session_time", type: "single", title: "Quanto tempo por treino?", help: "Escolha 1 opção.", default: "30-45",
-        options: [
-            { key: "15-25", label: "15–25 min", sub: "Enxuto" },
-            { key: "30-45", label: "30–45 min", sub: "Equilibrado" },
-            { key: "45-70", label: "45–70 min", sub: "Completo" },
-            { key: "70+", label: "70+ min", sub: "Longo" },
-        ]
-    },
-    {
-        id: "level", type: "single", title: "Seu nível hoje", help: "Escolha 1 opção.", default: "beginner",
-        options: [
-            { key: "beginner", label: "Iniciante", sub: "0–6 meses" },
-            { key: "intermediate", label: "Intermediário", sub: "6–24 meses" },
-            { key: "advanced", label: "Avançado", sub: "2+ anos" },
-        ]
-    },
+    // {
+    //     id: "session_time", type: "single", title: "Quanto tempo por treino?", help: "Escolha 1 opção.", default: "30-45",
+    //     options: [
+    //         { key: "15-25", label: "15–25 min", sub: "Enxuto" },
+    //         { key: "30-45", label: "30–45 min", sub: "Equilibrado" },
+    //         { key: "45-70", label: "45–70 min", sub: "Completo" },
+    //         { key: "70+", label: "70+ min", sub: "Longo" },
+    //     ]
+    // },
+    // {
+    //     id: "level", type: "single", title: "Seu nível hoje", help: "Escolha 1 opção.", default: "beginner",
+    //     options: [
+    //         { key: "beginner", label: "Iniciante", sub: "0–6 meses" },
+    //         { key: "intermediate", label: "Intermediário", sub: "6–24 meses" },
+    //         { key: "advanced", label: "Avançado", sub: "2+ anos" },
+    //     ]
+    // },
 
-    {
-        id: "daily_energy", type: "single", title: "Como está sua energia durante o dia?", help: "Escolha 1 opção.", default: "ok",
-        options: [
-            { key: "low", label: "Baixa", sub: "Cansaço constante" },
-            { key: "ok", label: "Ok", sub: "Oscila, mas dá para ir" },
-            { key: "high", label: "Alta", sub: "Disposto quase sempre" },
-            { key: "roller", label: "Varia muito", sub: "Picos e quedas" },
-        ]
-    },
-    {
-        id: "daily_focus", type: "single", title: "E sua mente/ânimo no dia a dia?", help: "Escolha 1 opção.", default: "normal",
-        options: [
-            { key: "stressed", label: "Estressado", sub: "Muita pressão/ansiedade" },
-            { key: "normal", label: "Normal", sub: "Dentro do esperado" },
-            { key: "motivated", label: "Motivado", sub: "Foco e constância" },
-            { key: "down", label: "Desanimado", sub: "Difícil manter rotina" },
-        ]
-    },
-    {
-        id: "weight_loss_ease", type: "single", title: "Historicamente, para você, perder gordura é…", help: "Escolha 1 opção.", default: "medium",
-        options: [
-            { key: "easy", label: "Fácil", sub: "Responde rápido" },
-            { key: "medium", label: "Médio", sub: "Demora, mas acontece" },
-            { key: "hard", label: "Difícil", sub: "Pouca resposta" },
-            { key: "unknown", label: "Não sei", sub: "Nunca acompanhei" },
-        ]
-    },
+    // {
+    //     id: "daily_energy", type: "single", title: "Como está sua energia durante o dia?", help: "Escolha 1 opção.", default: "ok",
+    //     options: [
+    //         { key: "low", label: "Baixa", sub: "Cansaço constante" },
+    //         { key: "ok", label: "Ok", sub: "Oscila, mas dá para ir" },
+    //         { key: "high", label: "Alta", sub: "Disposto quase sempre" },
+    //         { key: "roller", label: "Varia muito", sub: "Picos e quedas" },
+    //     ]
+    // },
+    // {
+    //     id: "daily_focus", type: "single", title: "E sua mente/ânimo no dia a dia?", help: "Escolha 1 opção.", default: "normal",
+    //     options: [
+    //         { key: "stressed", label: "Estressado", sub: "Muita pressão/ansiedade" },
+    //         { key: "normal", label: "Normal", sub: "Dentro do esperado" },
+    //         { key: "motivated", label: "Motivado", sub: "Foco e constância" },
+    //         { key: "down", label: "Desanimado", sub: "Difícil manter rotina" },
+    //     ]
+    // },
+    // {
+    //     id: "weight_loss_ease", type: "single", title: "Historicamente, para você, perder gordura é…", help: "Escolha 1 opção.", default: "medium",
+    //     options: [
+    //         { key: "easy", label: "Fácil", sub: "Responde rápido" },
+    //         { key: "medium", label: "Médio", sub: "Demora, mas acontece" },
+    //         { key: "hard", label: "Difícil", sub: "Pouca resposta" },
+    //         { key: "unknown", label: "Não sei", sub: "Nunca acompanhei" },
+    //     ]
+    // },
 
-    {
-        id: "diet_now", type: "single", title: "Como está sua alimentação hoje?", help: "Escolha 1 opção.", default: "mixed",
-        options: [
-            { key: "good", label: "Boa", sub: "Regular e organizada" },
-            { key: "mixed", label: "Mediana", sub: "Oscila durante a semana" },
-            { key: "messy", label: "Bagunçada", sub: "Muito improviso" },
-            { key: "low_app", label: "Apetite baixo", sub: "Pulo refeições" },
-        ]
-    },
-    {
-        id: "protein_habit", type: "single", title: "Proteína no dia a dia", help: "Escolha 1 opção.", default: "some",
-        options: [
-            { key: "low", label: "Quase não consumo", sub: "Pouca" },
-            { key: "some", label: "Consumo às vezes", sub: "Moderada" },
-            { key: "good", label: "Consumo bem", sub: "Consistente" },
-            { key: "track", label: "Eu acompanho macros", sub: "Mais controle" },
-        ]
-    },
+    // {
+    //     id: "diet_now", type: "single", title: "Como está sua alimentação hoje?", help: "Escolha 1 opção.", default: "mixed",
+    //     options: [
+    //         { key: "good", label: "Boa", sub: "Regular e organizada" },
+    //         { key: "mixed", label: "Mediana", sub: "Oscila durante a semana" },
+    //         { key: "messy", label: "Bagunçada", sub: "Muito improviso" },
+    //         { key: "low_app", label: "Apetite baixo", sub: "Pulo refeições" },
+    //     ]
+    // },
+    // {
+    //     id: "protein_habit", type: "single", title: "Proteína no dia a dia", help: "Escolha 1 opção.", default: "some",
+    //     options: [
+    //         { key: "low", label: "Quase não consumo", sub: "Pouca" },
+    //         { key: "some", label: "Consumo às vezes", sub: "Moderada" },
+    //         { key: "good", label: "Consumo bem", sub: "Consistente" },
+    //         { key: "track", label: "Eu acompanho macros", sub: "Mais controle" },
+    //     ]
+    // },
 
-    {
-        id: "goal_extra", type: "multi", min: 0,
-        title: "O que mais você espera alcançar com este plano?", help: "Marque o que aplica. Clique em Continuar.",
-        default: ["none"], exclusiveKey: "none",
-        options: [
-            { key: "muscle_strength", label: "Mais músculo e força", sub: "Evolução de shape e carga" },
-            { key: "endurance", label: "Resistência", sub: "Mais fôlego e energia" },
-            { key: "posture_flex", label: "Postura e flexibilidade", sub: "Mobilidade e alinhamento" },
-            { key: "libido", label: "Aumentar desejo sexual", sub: "Bem-estar geral" },
-            { key: "none", label: "Nenhuma dessas acima", sub: "Só o objetivo principal" },
-        ]
-    },
+    // {
+    //     id: "goal_extra", type: "multi", min: 0,
+    //     title: "O que mais você espera alcançar com este plano?", help: "Marque o que aplica. Clique em Continuar.",
+    //     default: ["none"], exclusiveKey: "none",
+    //     options: [
+    //         { key: "muscle_strength", label: "Mais músculo e força", sub: "Evolução de shape e carga" },
+    //         { key: "endurance", label: "Resistência", sub: "Mais fôlego e energia" },
+    //         { key: "posture_flex", label: "Postura e flexibilidade", sub: "Mobilidade e alinhamento" },
+    //         { key: "libido", label: "Aumentar desejo sexual", sub: "Bem-estar geral" },
+    //         { key: "none", label: "Nenhuma dessas acima", sub: "Só o objetivo principal" },
+    //     ]
+    // },
 
-    {
-        id: "best_shape_when", type: "single",
-        title: "Há quanto tempo você estava na melhor forma da sua vida?", help: "Escolha 1 opção.", default: "lt1y",
-        options: [
-            { key: "lt1y", label: "Menos de um ano atrás", sub: "Memória muscular ajuda" },
-            { key: "1-2y", label: "1 ou 2 anos atrás", sub: "Retorno possível" },
-            { key: "3y+", label: "Mais de 3 anos", sub: "Volta gradual" },
-            { key: "never", label: "Nunca", sub: "Construir do zero" },
-        ]
-    },
+    // {
+    //     id: "best_shape_when", type: "single",
+    //     title: "Há quanto tempo você estava na melhor forma da sua vida?", help: "Escolha 1 opção.", default: "lt1y",
+    //     options: [
+    //         { key: "lt1y", label: "Menos de um ano atrás", sub: "Memória muscular ajuda" },
+    //         { key: "1-2y", label: "1 ou 2 anos atrás", sub: "Retorno possível" },
+    //         { key: "3y+", label: "Mais de 3 anos", sub: "Volta gradual" },
+    //         { key: "never", label: "Nunca", sub: "Construir do zero" },
+    //     ]
+    // },
 
-    {
-        id: "weight_change_pattern", type: "single",
-        title: "Como seu peso normalmente muda?", help: "Escolha 1 opção.", default: "yo_yo",
-        options: [
-            { key: "gain_easy", label: "Ganho peso facilmente", sub: "Saio da rotina e sobe" },
-            { key: "lose_easy", label: "Perco peso facilmente", sub: "Organizou, responde" },
-            { key: "yo_yo", label: "Sobe e desce (efeito sanfona)", sub: "Oscila bastante" },
-            { key: "stable", label: "Fica estável", sub: "Pouca variação" },
-            { key: "not_sure", label: "Não sei / nunca acompanhei", sub: "Sem histórico claro" },
-        ]
-    },
+    // {
+    //     id: "weight_change_pattern", type: "single",
+    //     title: "Como seu peso normalmente muda?", help: "Escolha 1 opção.", default: "yo_yo",
+    //     options: [
+    //         { key: "gain_easy", label: "Ganho peso facilmente", sub: "Saio da rotina e sobe" },
+    //         { key: "lose_easy", label: "Perco peso facilmente", sub: "Organizou, responde" },
+    //         { key: "yo_yo", label: "Sobe e desce (efeito sanfona)", sub: "Oscila bastante" },
+    //         { key: "stable", label: "Fica estável", sub: "Pouca variação" },
+    //         { key: "not_sure", label: "Não sei / nunca acompanhei", sub: "Sem histórico claro" },
+    //     ]
+    // },
 
     {
         id: "pushups", type: "single", title: "Quantas flexões consegue fazer?", help: "Escolha 1 opção.", default: "1-5",
@@ -338,183 +338,183 @@ const quiz = [
         ]
     },
 
-    {
-        id: "flexibility", type: "single", title: "Quão flexível você é?", help: "Escolha 1 opção.", default: "medium",
-        options: [
-            { key: "low", label: "Baixa", sub: "Travado/encurtado" },
-            { key: "medium", label: "Média", sub: "Normal" },
-            { key: "good", label: "Boa", sub: "Mobilidade ok" },
-            { key: "high", label: "Alta", sub: "Bem flexível" },
-        ]
-    },
+    // {
+    //     id: "flexibility", type: "single", title: "Quão flexível você é?", help: "Escolha 1 opção.", default: "medium",
+    //     options: [
+    //         { key: "low", label: "Baixa", sub: "Travado/encurtado" },
+    //         { key: "medium", label: "Média", sub: "Normal" },
+    //         { key: "good", label: "Boa", sub: "Mobilidade ok" },
+    //         { key: "high", label: "Alta", sub: "Bem flexível" },
+    //     ]
+    // },
 
-    {
-        id: "target_zones", type: "multi", min: 0,
-        title: "Quais são as suas zonas-alvo?", help: "Marque o que aplica. Se selecionar “Corpo todo”, ele remove as outras.",
-        default: [], exclusiveKey: "full_body",
-        options: [
-            { key: "belly", label: "Barriga", sub: "Cintura/abdômen" },
-            { key: "chest", label: "Peitorais", sub: "Tórax" },
-            { key: "arms", label: "Braços", sub: "Bíceps/tríceps" },
-            { key: "legs", label: "Pernas", sub: "Quadríceps/posterior" },
-            { key: "back", label: "Costas", sub: "Dorsal/lombar" },
-            { key: "full_body", label: "Corpo todo", sub: "Plano geral (remove as outras)" },
-        ]
-    },
+    // {
+    //     id: "target_zones", type: "multi", min: 0,
+    //     title: "Quais são as suas zonas-alvo?", help: "Marque o que aplica. Se selecionar “Corpo todo”, ele remove as outras.",
+    //     default: [], exclusiveKey: "full_body",
+    //     options: [
+    //         { key: "belly", label: "Barriga", sub: "Cintura/abdômen" },
+    //         { key: "chest", label: "Peitorais", sub: "Tórax" },
+    //         { key: "arms", label: "Braços", sub: "Bíceps/tríceps" },
+    //         { key: "legs", label: "Pernas", sub: "Quadríceps/posterior" },
+    //         { key: "back", label: "Costas", sub: "Dorsal/lombar" },
+    //         { key: "full_body", label: "Corpo todo", sub: "Plano geral (remove as outras)" },
+    //     ]
+    // },
 
-    {
-        id: "typical_day", type: "single", title: "Como você descreveria seu dia típico?", help: "Escolha 1 opção.", default: "balanced",
-        options: [
-            { key: "mostly_sitting", label: "Maior tempo sentado", sub: "Trabalho/estudo sentado" },
-            { key: "balanced", label: "Balanceado (andando e sentado)", sub: "Me movimento um pouco" },
-            { key: "mostly_walking", label: "Constantemente andando", sub: "Rotina bem ativa" },
-            { key: "varies", label: "Varia de dia para dia", sub: "Sem padrão fixo" },
-        ]
-    },
+    // {
+    //     id: "typical_day", type: "single", title: "Como você descreveria seu dia típico?", help: "Escolha 1 opção.", default: "balanced",
+    //     options: [
+    //         { key: "mostly_sitting", label: "Maior tempo sentado", sub: "Trabalho/estudo sentado" },
+    //         { key: "balanced", label: "Balanceado (andando e sentado)", sub: "Me movimento um pouco" },
+    //         { key: "mostly_walking", label: "Constantemente andando", sub: "Rotina bem ativa" },
+    //         { key: "varies", label: "Varia de dia para dia", sub: "Sem padrão fixo" },
+    //     ]
+    // },
 
-    {
-        id: "water_intake", type: "single", title: "Qual é a sua ingestão diária de água?", help: "Escolha 1 opção.", default: "1-2l",
-        options: [
-            { key: "<1l", label: "Menos de 1L", sub: "Bem baixo" },
-            { key: "1-2l", label: "1–2L", sub: "Ok" },
-            { key: "2-3l", label: "2–3L", sub: "Bom" },
-            { key: "3l+", label: "3L+", sub: "Ótimo" },
-        ]
-    },
+    // {
+    //     id: "water_intake", type: "single", title: "Qual é a sua ingestão diária de água?", help: "Escolha 1 opção.", default: "1-2l",
+    //     options: [
+    //         { key: "<1l", label: "Menos de 1L", sub: "Bem baixo" },
+    //         { key: "1-2l", label: "1–2L", sub: "Ok" },
+    //         { key: "2-3l", label: "2–3L", sub: "Bom" },
+    //         { key: "3l+", label: "3L+", sub: "Ótimo" },
+    //     ]
+    // },
 
-    {
-        id: "habits", type: "multi", min: 0, title: "Você tem algum dos seguintes hábitos?",
-        help: "Marque o que aplica. Clique em Continuar.", default: ["none"], exclusiveKey: "none",
-        options: [
-            { key: "emotional", label: "Comendo por causa das emoções", sub: "Ansiedade/estresse" },
-            { key: "overeating", label: "Comer demais", sub: "Passa do ponto" },
-            { key: "night_snacks", label: "Lanches noturnos", sub: "Depois do jantar" },
-            { key: "skip_meals", label: "Pular refeições", sub: "Fica muito tempo sem comer" },
-            { key: "none", label: "Nenhum desses", sub: "Sem hábitos marcantes" },
-        ]
-    },
+    // {
+    //     id: "habits", type: "multi", min: 0, title: "Você tem algum dos seguintes hábitos?",
+    //     help: "Marque o que aplica. Clique em Continuar.", default: ["none"], exclusiveKey: "none",
+    //     options: [
+    //         { key: "emotional", label: "Comendo por causa das emoções", sub: "Ansiedade/estresse" },
+    //         { key: "overeating", label: "Comer demais", sub: "Passa do ponto" },
+    //         { key: "night_snacks", label: "Lanches noturnos", sub: "Depois do jantar" },
+    //         { key: "skip_meals", label: "Pular refeições", sub: "Fica muito tempo sem comer" },
+    //         { key: "none", label: "Nenhum desses", sub: "Sem hábitos marcantes" },
+    //     ]
+    // },
 
-    {
-        id: "cravings", type: "single", title: "Quais alimentos você deseja com mais frequência?", help: "Escolha 1 opção.", default: "sweets",
-        options: [
-            { key: "fastfood", label: "Fast-food", sub: "Hambúrguer/pizza" },
-            { key: "sweets", label: "Doces", sub: "Chocolate/bolos" },
-            { key: "soda", label: "Refrigerante", sub: "Bebida açucarada" },
-            { key: "savory", label: "Salgados", sub: "Frituras/snacks" },
-            { key: "none", label: "Nenhuma dessas", sub: "Sem preferência forte" },
-        ]
-    },
+    // {
+    //     id: "cravings", type: "single", title: "Quais alimentos você deseja com mais frequência?", help: "Escolha 1 opção.", default: "sweets",
+    //     options: [
+    //         { key: "fastfood", label: "Fast-food", sub: "Hambúrguer/pizza" },
+    //         { key: "sweets", label: "Doces", sub: "Chocolate/bolos" },
+    //         { key: "soda", label: "Refrigerante", sub: "Bebida açucarada" },
+    //         { key: "savory", label: "Salgados", sub: "Frituras/snacks" },
+    //         { key: "none", label: "Nenhuma dessas", sub: "Sem preferência forte" },
+    //     ]
+    // },
 
-    {
-        id: "diet_pref", type: "single", title: "Que tipo de dieta você prefere?", help: "Escolha 1 opção.", default: "traditional",
-        options: [
-            { key: "traditional", label: "Tradicional", sub: "Comida comum" },
-            { key: "keto", label: "Keto", sub: "Baixo carbo" },
-            { key: "paleo", label: "Paleolítica", sub: "Mais natural" },
-            { key: "vegetarian", label: "Vegetariana", sub: "Sem carne" },
-            { key: "vegan", label: "Vegana", sub: "Sem origem animal" },
-            { key: "keto_vegan", label: "Keto vegano", sub: "Baixo carbo + vegano" },
-            { key: "lactose_free", label: "Sem lactose", sub: "Evita lactose" },
-            { key: "gluten_free", label: "Sem glúten", sub: "Evita glúten" },
-        ]
-    },
+    // {
+    //     id: "diet_pref", type: "single", title: "Que tipo de dieta você prefere?", help: "Escolha 1 opção.", default: "traditional",
+    //     options: [
+    //         { key: "traditional", label: "Tradicional", sub: "Comida comum" },
+    //         { key: "keto", label: "Keto", sub: "Baixo carbo" },
+    //         { key: "paleo", label: "Paleolítica", sub: "Mais natural" },
+    //         { key: "vegetarian", label: "Vegetariana", sub: "Sem carne" },
+    //         { key: "vegan", label: "Vegana", sub: "Sem origem animal" },
+    //         { key: "keto_vegan", label: "Keto vegano", sub: "Baixo carbo + vegano" },
+    //         { key: "lactose_free", label: "Sem lactose", sub: "Evita lactose" },
+    //         { key: "gluten_free", label: "Sem glúten", sub: "Evita glúten" },
+    //     ]
+    // },
 
-    {
-        id: "weight_gain_events", type: "multi", min: 0,
-        title: "Algum dos seguintes eventos levou ao ganho de peso nos últimos anos?",
-        help: "Marque o que aplica. Clique em Continuar.", default: ["none"], exclusiveKey: "none",
-        options: [
-            { key: "work_pressure", label: "Pressão de trabalho", sub: "Rotina puxada" },
-            { key: "financial", label: "Problemas financeiros", sub: "Estresse/ansiedade" },
-            { key: "pandemic", label: "Pandemia", sub: "Mudou hábitos" },
-            { key: "breakup", label: "Divórcio ou término", sub: "Impacto emocional" },
-            { key: "stress_other", label: "Outros eventos estressantes", sub: "Variável" },
-            { key: "slower_metabolism", label: "Metabolismo mais lento durante o passar da idade", sub: "Percepção de queda" },
-            { key: "none", label: "Nenhuma das anteriores", sub: "Sem evento claro" },
-        ]
-    },
+    // {
+    //     id: "weight_gain_events", type: "multi", min: 0,
+    //     title: "Algum dos seguintes eventos levou ao ganho de peso nos últimos anos?",
+    //     help: "Marque o que aplica. Clique em Continuar.", default: ["none"], exclusiveKey: "none",
+    //     options: [
+    //         { key: "work_pressure", label: "Pressão de trabalho", sub: "Rotina puxada" },
+    //         { key: "financial", label: "Problemas financeiros", sub: "Estresse/ansiedade" },
+    //         { key: "pandemic", label: "Pandemia", sub: "Mudou hábitos" },
+    //         { key: "breakup", label: "Divórcio ou término", sub: "Impacto emocional" },
+    //         { key: "stress_other", label: "Outros eventos estressantes", sub: "Variável" },
+    //         { key: "slower_metabolism", label: "Metabolismo mais lento durante o passar da idade", sub: "Percepção de queda" },
+    //         { key: "none", label: "Nenhuma das anteriores", sub: "Sem evento claro" },
+    //     ]
+    // },
 
-    {
-        id: "important_event", type: "single", title: "Você tem um evento importante chegando?",
-        help: "Se tiver, vamos ajustar o plano para bater a meta até a data.", default: "none",
-        options: [
-            { key: "wedding", label: "Casamento", sub: "Meta por data" },
-            { key: "trip", label: "Viagem", sub: "Meta por data" },
-            { key: "vacation", label: "Férias", sub: "Meta por data" },
-            { key: "competition", label: "Competição", sub: "Meta por data" },
-            { key: "party", label: "Festa", sub: "Meta por data" },
-            { key: "meeting", label: "Reunião", sub: "Meta por data" },
-            { key: "show", label: "Show", sub: "Meta por data" },
-            { key: "birthday", label: "Aniversário", sub: "Meta por data" },
-            { key: "special_date", label: "Data importante", sub: "Meta por data" },
-            { key: "adventure", label: "Aventura", sub: "Meta por data" },
-            { key: "family", label: "Ocasião familiar", sub: "Meta por data" },
-            { key: "none", label: "Nenhum evento importante", sub: "Plano no tempo realista" },
-        ]
-    },
+    // {
+    //     id: "important_event", type: "single", title: "Você tem um evento importante chegando?",
+    //     help: "Se tiver, vamos ajustar o plano para bater a meta até a data.", default: "none",
+    //     options: [
+    //         { key: "wedding", label: "Casamento", sub: "Meta por data" },
+    //         { key: "trip", label: "Viagem", sub: "Meta por data" },
+    //         { key: "vacation", label: "Férias", sub: "Meta por data" },
+    //         { key: "competition", label: "Competição", sub: "Meta por data" },
+    //         { key: "party", label: "Festa", sub: "Meta por data" },
+    //         { key: "meeting", label: "Reunião", sub: "Meta por data" },
+    //         { key: "show", label: "Show", sub: "Meta por data" },
+    //         { key: "birthday", label: "Aniversário", sub: "Meta por data" },
+    //         { key: "special_date", label: "Data importante", sub: "Meta por data" },
+    //         { key: "adventure", label: "Aventura", sub: "Meta por data" },
+    //         { key: "family", label: "Ocasião familiar", sub: "Meta por data" },
+    //         { key: "none", label: "Nenhum evento importante", sub: "Plano no tempo realista" },
+    //     ]
+    // },
 
-    { id: "event_date", type: "eventdate", title: "Selecione o dia do seu evento", help: "Escolha uma data a partir de hoje. Essa data vira o prazo do seu plano." },
+    // { id: "event_date", type: "eventdate", title: "Selecione o dia do seu evento", help: "Escolha uma data a partir de hoje. Essa data vira o prazo do seu plano." },
 
-    {
-        id: "obstacle", type: "single", title: "O que o impediu de voltar à forma?", help: "Escolha 1 opção.", default: "consistency",
-        options: [
-            { key: "time", label: "Falta de tempo", sub: "Rotina cheia" },
-            { key: "consistency", label: "Falta de consistência", sub: "Começa e para" },
-            { key: "motivation", label: "Desmotivação / emocional", sub: "Ânimo oscila" },
-            { key: "knowledge", label: "Não saber o que fazer", sub: "Treino/dieta confusos" },
-            { key: "injury_pain", label: "Dor/lesão", sub: "Limita execução" },
-            { key: "money", label: "Dinheiro / acesso a recursos", sub: "Recursos limitados" },
-            { key: "environment", label: "Ambiente/rotina atrapalha", sub: "Família/trabalho" },
-            { key: "other", label: "Outro motivo", sub: "Variável" },
-        ]
-    },
+    // {
+    //     id: "obstacle", type: "single", title: "O que o impediu de voltar à forma?", help: "Escolha 1 opção.", default: "consistency",
+    //     options: [
+    //         { key: "time", label: "Falta de tempo", sub: "Rotina cheia" },
+    //         { key: "consistency", label: "Falta de consistência", sub: "Começa e para" },
+    //         { key: "motivation", label: "Desmotivação / emocional", sub: "Ânimo oscila" },
+    //         { key: "knowledge", label: "Não saber o que fazer", sub: "Treino/dieta confusos" },
+    //         { key: "injury_pain", label: "Dor/lesão", sub: "Limita execução" },
+    //         { key: "money", label: "Dinheiro / acesso a recursos", sub: "Recursos limitados" },
+    //         { key: "environment", label: "Ambiente/rotina atrapalha", sub: "Família/trabalho" },
+    //         { key: "other", label: "Outro motivo", sub: "Variável" },
+    //     ]
+    // },
 
-    {
-        id: "muscle_motivation", type: "single", title: "Qual a sua motivação para ganhar massa muscular?", help: "Escolha 1 opção.", default: "aesthetics",
-        options: [
-            { key: "aesthetics", label: "Estética (corpo/shape)", sub: "Visual e definição" },
-            { key: "strength", label: "Força e performance", sub: "Cargas e movimentos" },
-            { key: "health", label: "Saúde e longevidade", sub: "Bem-estar geral" },
-            { key: "confidence", label: "Autoestima/confiança", sub: "Sentir-se melhor" },
-            { key: "sports", label: "Esporte/competição", sub: "Performance esportiva" },
-            { key: "metabolism", label: "Aumentar metabolismo/recomposição", sub: "Corpo mais “ativo”" },
-        ]
-    },
+    // {
+    //     id: "muscle_motivation", type: "single", title: "Qual a sua motivação para ganhar massa muscular?", help: "Escolha 1 opção.", default: "aesthetics",
+    //     options: [
+    //         { key: "aesthetics", label: "Estética (corpo/shape)", sub: "Visual e definição" },
+    //         { key: "strength", label: "Força e performance", sub: "Cargas e movimentos" },
+    //         { key: "health", label: "Saúde e longevidade", sub: "Bem-estar geral" },
+    //         { key: "confidence", label: "Autoestima/confiança", sub: "Sentir-se melhor" },
+    //         { key: "sports", label: "Esporte/competição", sub: "Performance esportiva" },
+    //         { key: "metabolism", label: "Aumentar metabolismo/recomposição", sub: "Corpo mais “ativo”" },
+    //     ]
+    // },
 
-    {
-        id: "confidence", type: "single", title: "Quão confiante você está de que alcançará o objetivo até a data definida?", help: "Escolha 1 opção.", default: "3",
-        options: [
-            { key: "1", label: "1 — Nada confiante", sub: "Preciso de muita ajuda" },
-            { key: "2", label: "2", sub: "Baixa confiança" },
-            { key: "3", label: "3", sub: "Média" },
-            { key: "4", label: "4", sub: "Alta" },
-            { key: "5", label: "5 — Muito confiante", sub: "Vou executar" },
-        ]
-    },
+    // {
+    //     id: "confidence", type: "single", title: "Quão confiante você está de que alcançará o objetivo até a data definida?", help: "Escolha 1 opção.", default: "3",
+    //     options: [
+    //         { key: "1", label: "1 — Nada confiante", sub: "Preciso de muita ajuda" },
+    //         { key: "2", label: "2", sub: "Baixa confiança" },
+    //         { key: "3", label: "3", sub: "Média" },
+    //         { key: "4", label: "4", sub: "Alta" },
+    //         { key: "5", label: "5 — Muito confiante", sub: "Vou executar" },
+    //     ]
+    // },
 
-    {
-        id: "injuries", type: "multi", min: 0, title: "Dores/lesões recorrentes?", help: "Marque o que aplica. Clique em Continuar.",
-        default: ["none"], exclusiveKey: "none",
-        options: [
-            { key: "none", label: "Nenhuma", sub: "Sem restrições" },
-            { key: "knee", label: "Joelho", sub: "Ajustar agachamentos" },
-            { key: "back", label: "Lombar", sub: "Ajustar postura/carga" },
-            { key: "shoulder", label: "Ombro", sub: "Ajustar empurrar" },
-            { key: "wrist", label: "Punho", sub: "Ajustar apoios" },
-            { key: "other", label: "Outra", sub: "Considerar no plano" },
-        ]
-    },
+    // {
+    //     id: "injuries", type: "multi", min: 0, title: "Dores/lesões recorrentes?", help: "Marque o que aplica. Clique em Continuar.",
+    //     default: ["none"], exclusiveKey: "none",
+    //     options: [
+    //         { key: "none", label: "Nenhuma", sub: "Sem restrições" },
+    //         { key: "knee", label: "Joelho", sub: "Ajustar agachamentos" },
+    //         { key: "back", label: "Lombar", sub: "Ajustar postura/carga" },
+    //         { key: "shoulder", label: "Ombro", sub: "Ajustar empurrar" },
+    //         { key: "wrist", label: "Punho", sub: "Ajustar apoios" },
+    //         { key: "other", label: "Outra", sub: "Considerar no plano" },
+    //     ]
+    // },
 
-    {
-        id: "sleep_hours", type: "single", title: "Horas de sono", help: "Escolha 1 opção.", default: "6-7",
-        options: [
-            { key: "<5", label: "< 5h", sub: "Recuperação baixa" },
-            { key: "5-6", label: "5–6h", sub: "Dá para melhorar" },
-            { key: "6-7", label: "6–7h", sub: "Ok" },
-            { key: "7-8", label: "7–8h", sub: "Bom" },
-            { key: "8+", label: "8h+", sub: "Ótimo" },
-        ]
-    },
+    // {
+    //     id: "sleep_hours", type: "single", title: "Horas de sono", help: "Escolha 1 opção.", default: "6-7",
+    //     options: [
+    //         { key: "<5", label: "< 5h", sub: "Recuperação baixa" },
+    //         { key: "5-6", label: "5–6h", sub: "Dá para melhorar" },
+    //         { key: "6-7", label: "6–7h", sub: "Ok" },
+    //         { key: "7-8", label: "7–8h", sub: "Bom" },
+    //         { key: "8+", label: "8h+", sub: "Ótimo" },
+    //     ]
+    // },
 
     {
         id: "alcohol_use", type: "single", title: "Você consome álcool?", help: "Escolha 1 opção.", default: "no",
@@ -533,21 +533,21 @@ const quiz = [
         ]
     },
 
-    {
-        id: "smoke_use", type: "single", title: "Você fuma ou usa vape?", help: "Escolha 1 opção.", default: "no",
-        options: [
-            { key: "no", label: "Não", sub: "Não fumo/não uso" },
-            { key: "yes", label: "Sim", sub: "Uso às vezes ou com frequência" },
-        ]
-    },
-    {
-        id: "smoke_freq", type: "single", title: "Com que frequência você fuma/usa vape?", help: "Escolha 1 opção.", default: "rare",
-        options: [
-            { key: "rare", label: "Raramente", sub: "Social / ocasional" },
-            { key: "week", label: "Algumas vezes/semana", sub: "Leve" },
-            { key: "daily", label: "Todo dia", sub: "Alta frequência" },
-        ]
-    },
+    // {
+    //     id: "smoke_use", type: "single", title: "Você fuma ou usa vape?", help: "Escolha 1 opção.", default: "no",
+    //     options: [
+    //         { key: "no", label: "Não", sub: "Não fumo/não uso" },
+    //         { key: "yes", label: "Sim", sub: "Uso às vezes ou com frequência" },
+    //     ]
+    // },
+    // {
+    //     id: "smoke_freq", type: "single", title: "Com que frequência você fuma/usa vape?", help: "Escolha 1 opção.", default: "rare",
+    //     options: [
+    //         { key: "rare", label: "Raramente", sub: "Social / ocasional" },
+    //         { key: "week", label: "Algumas vezes/semana", sub: "Leve" },
+    //         { key: "daily", label: "Todo dia", sub: "Alta frequência" },
+    //     ]
+    // },
 
     { id: "consent", type: "consent", title: "Confirmação rápida", help: "Marque as duas caixas para continuar." },
     { id: "metrics", type: "metrics", title: "Altura e peso", help: "Digite seus dados." },
