@@ -17,39 +17,39 @@ const CHECKOUT_URL = "https://pay.kiwify.com/zrUPXO1";
 
 /* ========= PAÍSES LATAM ========= */
 const LATAM_COUNTRIES = [
-    { code: "BR", dial: "55", flag: "🇧🇷", name: "Brasil", mask: "(##) #####-####", digits: 11 },
-    { code: "AR", dial: "54", flag: "🇦🇷", name: "Argentina", mask: "(##) ####-####", digits: 10 },
-    { code: "MX", dial: "52", flag: "🇲🇽", name: "México", mask: "(##) ####-####", digits: 10 },
-    { code: "CO", dial: "57", flag: "🇨🇴", name: "Colombia", mask: "### ###-####", digits: 10 },
-    { code: "CL", dial: "56", flag: "🇨🇱", name: "Chile", mask: "# ####-####", digits: 9 },
-    { code: "PE", dial: "51", flag: "🇵🇪", name: "Perú", mask: "### ###-###", digits: 9 },
-    { code: "VE", dial: "58", flag: "🇻🇪", name: "Venezuela", mask: "###-###-####", digits: 10 },
-    { code: "EC", dial: "593", flag: "🇪🇨", name: "Ecuador", mask: "## ###-####", digits: 9 },
-    { code: "BO", dial: "591", flag: "🇧🇴", name: "Bolivia", mask: "########", digits: 8 },
-    { code: "PY", dial: "595", flag: "🇵🇾", name: "Paraguay", mask: "### ###-###", digits: 9 },
-    { code: "UY", dial: "598", flag: "🇺🇾", name: "Uruguay", mask: "# ###-####", digits: 8 },
-    { code: "PA", dial: "507", flag: "🇵🇦", name: "Panamá", mask: "####-####", digits: 8 },
-    { code: "CR", dial: "506", flag: "🇨🇷", name: "Costa Rica", mask: "####-####", digits: 8 },
-    { code: "GT", dial: "502", flag: "🇬🇹", name: "Guatemala", mask: "####-####", digits: 8 },
-    { code: "HN", dial: "504", flag: "🇭🇳", name: "Honduras", mask: "####-####", digits: 8 },
-    { code: "SV", dial: "503", flag: "🇸🇻", name: "El Salvador", mask: "####-####", digits: 8 },
-    { code: "NI", dial: "505", flag: "🇳🇮", name: "Nicaragua", mask: "####-####", digits: 8 },
-    { code: "DO", dial: "1", flag: "🇩🇴", name: "Rep. Dominicana", mask: "(###) ###-####", digits: 10 },
-    { code: "PT", dial: "351", flag: "🇵🇹", name: "Portugal", mask: "### ### ###", digits: 9 },
-    { code: "ES", dial: "34", flag: "🇪🇸", name: "España", mask: "### ### ###", digits: 9 },
-    { code: "US", dial: "1", flag: "🇺🇸", name: "USA / Canada", mask: "(###) ###-####", digits: 10 },
+    { code: "BR",  dial: "55",  flag: "🇧🇷", name: "Brasil",          mask: "(##) #####-####",  digits: 11 },
+    { code: "AR",  dial: "54",  flag: "🇦🇷", name: "Argentina",       mask: "(##) ####-####",   digits: 10 },
+    { code: "MX",  dial: "52",  flag: "🇲🇽", name: "México",          mask: "(##) ####-####",   digits: 10 },
+    { code: "CO",  dial: "57",  flag: "🇨🇴", name: "Colombia",        mask: "### ###-####",     digits: 10 },
+    { code: "CL",  dial: "56",  flag: "🇨🇱", name: "Chile",           mask: "# ####-####",      digits: 9  },
+    { code: "PE",  dial: "51",  flag: "🇵🇪", name: "Perú",            mask: "### ###-###",      digits: 9  },
+    { code: "VE",  dial: "58",  flag: "🇻🇪", name: "Venezuela",       mask: "###-###-####",     digits: 10 },
+    { code: "EC",  dial: "593", flag: "🇪🇨", name: "Ecuador",         mask: "## ###-####",      digits: 9  },
+    { code: "BO",  dial: "591", flag: "🇧🇴", name: "Bolivia",         mask: "########",         digits: 8  },
+    { code: "PY",  dial: "595", flag: "🇵🇾", name: "Paraguay",        mask: "### ###-###",      digits: 9  },
+    { code: "UY",  dial: "598", flag: "🇺🇾", name: "Uruguay",         mask: "# ###-####",       digits: 8  },
+    { code: "PA",  dial: "507", flag: "🇵🇦", name: "Panamá",          mask: "####-####",        digits: 8  },
+    { code: "CR",  dial: "506", flag: "🇨🇷", name: "Costa Rica",      mask: "####-####",        digits: 8  },
+    { code: "GT",  dial: "502", flag: "🇬🇹", name: "Guatemala",       mask: "####-####",        digits: 8  },
+    { code: "HN",  dial: "504", flag: "🇭🇳", name: "Honduras",        mask: "####-####",        digits: 8  },
+    { code: "SV",  dial: "503", flag: "🇸🇻", name: "El Salvador",     mask: "####-####",        digits: 8  },
+    { code: "NI",  dial: "505", flag: "🇳🇮", name: "Nicaragua",       mask: "####-####",        digits: 8  },
+    { code: "DO",  dial: "1",   flag: "🇩🇴", name: "Rep. Dominicana", mask: "(###) ###-####",   digits: 10 },
+    { code: "PT",  dial: "351", flag: "🇵🇹", name: "Portugal",        mask: "### ### ###",      digits: 9  },
+    { code: "ES",  dial: "34",  flag: "🇪🇸", name: "España",          mask: "### ### ###",      digits: 9  },
+    { code: "US",  dial: "1",   flag: "🇺🇸", name: "USA / Canada",    mask: "(###) ###-####",   digits: 10 },
 ];
 
 /* ========= IMAGENS ========= */
 const BODY_IMAGES = {
-    body_slim: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/frkfmgyqi4ookhtvezeb",
+    body_slim:    "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/frkfmgyqi4ookhtvezeb",
     body_average: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/urna8ckcbdhtoituboul",
-    body_over: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/zeqazwlflx8eswu43rf6",
-    body_athletic: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/bkvsiohfm56rp2bw8pvr",
-    goal_lean: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/tg3i4p81vovksppkkj7i",
-    goal_athletic: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/htwcrvq2yzpyovzsewiz",
-    goal_muscle: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/knsjtzosy3lr7q2vypxc",
-    goal_strength: "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/fwaxr8uil6gywgxdjmke",
+    body_over:    "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/zeqazwlflx8eswu43rf6",
+    body_athletic:"https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/bkvsiohfm56rp2bw8pvr",
+    goal_lean:    "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/tg3i4p81vovksppkkj7i",
+    goal_athletic:"https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/htwcrvq2yzpyovzsewiz",
+    goal_muscle:  "https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/knsjtzosy3lr7q2vypxc",
+    goal_strength:"https://res.cloudinary.com/drhg6wpcy/image/upload/f_webp/q_auto:eco/fl_lossy/c_fit%2Cw_384/fwaxr8uil6gywgxdjmke",
 };
 
 const TESTIMONIALS = [
@@ -62,7 +62,7 @@ const TESTIMONIALS = [
 ];
 
 /* ========= helpers ========= */
-const el = (id) => document.getElementById(id);
+const el    = (id) => document.getElementById(id);
 const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
 function escapeHtml(str) {
@@ -76,7 +76,7 @@ function escapeHtml(str) {
 }
 
 function formatDateByLang(iso) {
-    const d = new Date(iso + "T00:00:00");
+    const d    = new Date(iso + "T00:00:00");
     const lang = (typeof getLang === "function" ? getLang() : "pt") || "pt";
     try {
         return new Intl.DateTimeFormat(lang === "pt" ? "pt-BR" : "en-US", {
@@ -91,7 +91,7 @@ function todayISO() {
     return d.toISOString().slice(0, 10);
 }
 function addMonthsISO(baseISO, months) {
-    const d = new Date(baseISO + "T00:00:00");
+    const d   = new Date(baseISO + "T00:00:00");
     const day = d.getDate();
     d.setMonth(d.getMonth() + months);
     if (d.getDate() !== day) d.setDate(0);
@@ -99,16 +99,16 @@ function addMonthsISO(baseISO, months) {
 }
 function daysBetween(fromISO, toISO) {
     const a = new Date(fromISO + "T00:00:00").getTime();
-    const b = new Date(toISO + "T00:00:00").getTime();
+    const b = new Date(toISO  + "T00:00:00").getTime();
     return Math.max(0, Math.round((b - a) / (1000 * 60 * 60 * 24)));
 }
 function isPastDate(iso) {
     const t = new Date(todayISO() + "T00:00:00").getTime();
-    const x = new Date(iso + "T00:00:00").getTime();
+    const x = new Date(iso        + "T00:00:00").getTime();
     return x < t;
 }
 function formatBRDate(iso) {
-    const d = new Date(iso + "T00:00:00");
+    const d  = new Date(iso + "T00:00:00");
     const dd = String(d.getDate()).padStart(2, "0");
     const mm = String(d.getMonth() + 1).padStart(2, "0");
     const yy = d.getFullYear();
@@ -155,10 +155,10 @@ function bmiFrom(heightCm, weightKg) {
     return weightKg / (h * h);
 }
 function bmiCategory(bmi) {
-    if (bmi < 18.5) return { key: "under" };
-    if (bmi < 25) return { key: "normal" };
-    if (bmi < 30) return { key: "over" };
-    return { key: "obese" };
+    if (bmi < 18.5) return { key: "under"  };
+    if (bmi < 25)   return { key: "normal" };
+    if (bmi < 30)   return { key: "over"   };
+    return              { key: "obese"  };
 }
 function tBMI(key, fallback = "") { return tUI(key, fallback); }
 
@@ -183,8 +183,8 @@ function imageHTML(key) {
 
 /* ========= estado ========= */
 const state = { index: 0, answers: {} };
-function getAnswer(id) { return state.answers[id]; }
-function setAnswer(id, val) { state.answers[id] = val; }
+function getAnswer(id)      { return state.answers[id]; }
+function setAnswer(id, val) { state.answers[id] = val;  }
 
 /* ========= QUIZ ========= */
 const quiz = [
@@ -194,10 +194,10 @@ const quiz = [
         id: "goal", type: "single", ui: "image", sheet: "goal",
         title: "Qual é seu objetivo visual?", help: "Escolha 1 opção.", default: "goal_lean",
         options: [
-            { key: "goal_lean", label: "Mais definido", sub: "Seco / leve" },
-            { key: "goal_athletic", label: "Atlético", sub: "Estética + performance" },
-            { key: "goal_muscle", label: "Mais volume", sub: "Shape cheio" },
-            { key: "goal_strength", label: "Força", sub: "Movimentos difíceis" },
+            { key: "goal_lean",     label: "Mais definido", sub: "Seco / leve" },
+            { key: "goal_athletic", label: "Atlético",       sub: "Estética + performance" },
+            { key: "goal_muscle",   label: "Mais volume",    sub: "Shape cheio" },
+            { key: "goal_strength", label: "Força",          sub: "Movimentos difíceis" },
         ]
     },
     {
@@ -207,14 +207,14 @@ const quiz = [
             { key: "18-24", label: "18–24", sub: "Progressão rápida" },
             { key: "25-34", label: "25–34", sub: "Consistência" },
             { key: "35-44", label: "35–44", sub: "Recuperação inteligente" },
-            { key: "45+", label: "45+", sub: "Progressão segura" },
+            { key: "45+",   label: "45+",   sub: "Progressão segura" },
         ]
     },
     {
         id: "trained_before", type: "single", title: "Você já treinou de forma consistente antes?", help: "Escolha 1 opção.", default: "yes_some",
         options: [
-            { key: "no", label: "Nunca", sub: "Vamos começar do básico" },
-            { key: "yes_some", label: "Já, mas parei", sub: "Retomar com progressão segura" },
+            { key: "no",          label: "Nunca",             sub: "Vamos começar do básico" },
+            { key: "yes_some",    label: "Já, mas parei",     sub: "Retomar com progressão segura" },
             { key: "yes_regular", label: "Sim, regularmente", sub: "Ajustar volume e performance" },
         ]
     },
@@ -222,65 +222,65 @@ const quiz = [
         id: "body_current", type: "single", ui: "image", sheet: "body_current",
         title: "Como está seu corpo hoje?", help: "Escolha 1 opção.", default: "body_average",
         options: [
-            { key: "body_slim", label: "Mais magro", sub: "Pouca massa" },
-            { key: "body_average", label: "Mediano", sub: "Normal" },
-            { key: "body_over", label: "Acima do peso", sub: "Gordura extra" },
-            { key: "body_athletic", label: "Já em forma", sub: "Quero performance" },
+            { key: "body_slim",     label: "Mais magro",   sub: "Pouca massa" },
+            { key: "body_average",  label: "Mediano",       sub: "Normal" },
+            { key: "body_over",     label: "Acima do peso", sub: "Gordura extra" },
+            { key: "body_athletic", label: "Já em forma",   sub: "Quero performance" },
         ]
     },
     {
         id: "days", type: "single", title: "Quantos dias/semana você treina?", help: "Escolha 1 opção.", default: "3",
         options: [
-            { key: "2", label: "2 dias", sub: "Mínimo viável" },
-            { key: "3", label: "3 dias", sub: "Equilíbrio ideal" },
-            { key: "4", label: "4 dias", sub: "Evolução mais rápida" },
+            { key: "2",  label: "2 dias", sub: "Mínimo viável" },
+            { key: "3",  label: "3 dias", sub: "Equilíbrio ideal" },
+            { key: "4",  label: "4 dias", sub: "Evolução mais rápida" },
             { key: "5+", label: "5+ dias", sub: "Alta disciplina" },
         ]
     },
     {
         id: "pushups", type: "single", title: "Quantas flexões consegue fazer?", help: "Escolha 1 opção.", default: "1-5",
         options: [
-            { key: "0", label: "0 (não consigo ainda)", sub: "Vamos adaptar" },
-            { key: "1-5", label: "1–5", sub: "Base inicial" },
-            { key: "6-15", label: "6–15", sub: "Intermediário" },
-            { key: "16-30", label: "16–30", sub: "Bom nível" },
-            { key: "31+", label: "31+", sub: "Alto nível" },
+            { key: "0",    label: "0 (não consigo ainda)", sub: "Vamos adaptar" },
+            { key: "1-5",  label: "1–5",   sub: "Base inicial" },
+            { key: "6-15", label: "6–15",  sub: "Intermediário" },
+            { key: "16-30",label: "16–30", sub: "Bom nível" },
+            { key: "31+",  label: "31+",   sub: "Alto nível" },
         ]
     },
     {
         id: "squats", type: "single", title: "Quantos agachamentos consegue fazer?", help: "Escolha 1 opção.", default: "11-25",
         options: [
-            { key: "0-10", label: "0–10", sub: "Base inicial" },
+            { key: "0-10",  label: "0–10",  sub: "Base inicial" },
             { key: "11-25", label: "11–25", sub: "Ok" },
             { key: "26-50", label: "26–50", sub: "Bom" },
             { key: "51-80", label: "51–80", sub: "Muito bom" },
-            { key: "81+", label: "81+", sub: "Excelente" },
+            { key: "81+",   label: "81+",   sub: "Excelente" },
         ]
     },
     {
         id: "alcohol_use", type: "single", title: "Você consome álcool?", help: "Escolha 1 opção.", default: "no",
         options: [
-            { key: "no", label: "Não", sub: "Não consumo" },
+            { key: "no",  label: "Não", sub: "Não consumo" },
             { key: "yes", label: "Sim", sub: "Consumo álcool" },
         ]
     },
     {
         id: "alcohol_freq", type: "single", title: "Com que frequência você consome álcool?", help: "Escolha 1 opção.", default: "rare",
         options: [
-            { key: "rare", label: "Raramente", sub: "1–2x/mês" },
-            { key: "weekend", label: "Fins de semana", sub: "1–2x/sem" },
-            { key: "often", label: "Frequente", sub: "3–5x/sem" },
-            { key: "daily", label: "Quase todo dia", sub: "Alta frequência" },
+            { key: "rare",    label: "Raramente",       sub: "1–2x/mês" },
+            { key: "weekend", label: "Fins de semana",  sub: "1–2x/sem" },
+            { key: "often",   label: "Frequente",       sub: "3–5x/sem" },
+            { key: "daily",   label: "Quase todo dia",  sub: "Alta frequência" },
         ]
     },
-    { id: "consent", type: "consent", title: "Confirmação rápida", help: "Marque as duas caixas para continuar." },
-    { id: "metrics", type: "metrics", title: "Altura e peso", help: "Digite seus dados." },
-    { id: "bmi_info", type: "bmi_info", title: "Seu IMC e o que isso pode indicar", help: "Leitura rápida antes de continuar." },
-    { id: "goal_date", type: "goaldate", title: "Data do objetivo", help: "Já sugerimos uma data realista (6 meses). Você pode ajustar." },
-    { id: "target", type: "target", title: "Peso alvo (kg)", help: "Digite o peso alvo." },
-    { id: "projection", type: "projection", title: "Projeção de progresso", help: "Com base no peso atual, peso alvo e data." },
-    { id: "gen_email", type: "gen_email", title: "SEU PLANO ESTÁ SENDO GERADO", help: "Ajustando treino + dieta com base nas suas respostas." },
-    { id: "email", type: "email", title: "Quase lá! Preencha seus dados", help: "Seus dados são usados apenas para envio do plano." },
+    { id: "consent",    type: "consent",    title: "Confirmação rápida",                    help: "Marque as duas caixas para continuar." },
+    { id: "metrics",    type: "metrics",    title: "Altura e peso",                          help: "Digite seus dados." },
+    { id: "bmi_info",   type: "bmi_info",   title: "Seu IMC e o que isso pode indicar",     help: "Leitura rápida antes de continuar." },
+    { id: "goal_date",  type: "goaldate",   title: "Data do objetivo",                       help: "Já sugerimos uma data realista (6 meses). Você pode ajustar." },
+    { id: "target",     type: "target",     title: "Peso alvo (kg)",                         help: "Digite o peso alvo." },
+    { id: "projection", type: "projection", title: "Projeção de progresso",                  help: "Com base no peso atual, peso alvo e data." },
+    { id: "gen_email",  type: "gen_email",  title: "SEU PLANO ESTÁ SENDO GERADO",            help: "Ajustando treino + dieta com base nas suas respostas." },
+    { id: "email",      type: "email",      title: "Quase lá! Preencha seus dados",          help: "Seus dados são usados apenas para envio do plano." },
 ];
 
 /* ========= defaults ========= */
@@ -296,10 +296,10 @@ function applyDefaultsOnce() {
 }
 
 /* ========= progress ========= */
-function totalSteps() { return quiz.length; }
-function progressPct() {
+function totalSteps()   { return quiz.length; }
+function progressPct()  {
     const total = totalSteps();
-    const step = clamp(state.index, 0, total - 1);
+    const step  = clamp(state.index, 0, total - 1);
     return total <= 1 ? 0 : Math.round((step / (total - 1)) * 100);
 }
 function updateTopbar() { el("bar").style.width = progressPct() + "%"; }
@@ -309,7 +309,7 @@ function isAnswered(q) {
     const a = getAnswer(q.id);
 
     if (q.type === "single") return typeof a === "string" && a.length > 0;
-    if (q.type === "multi") return Array.isArray(a) && a.length >= (q.min ?? 0);
+    if (q.type === "multi")  return Array.isArray(a) && a.length >= (q.min ?? 0);
 
     if (q.type === "consent") {
         const c = a || {};
@@ -336,19 +336,19 @@ function isAnswered(q) {
     }
 
     if (q.type === "projection") return true;
-    if (q.type === "gen_email") return true;
+    if (q.type === "gen_email")  return true;
 
     /* ── EMAIL (novo: nome + email + telefone) ── */
     if (q.type === "email") {
         const v = a || {};
-        const name = String(v.name || "").trim();
-        const email = String(v.email || "").trim();
-        const phone = String(v.phone || "").replace(/\D/g, "");
-        const country = getCountryByCode(v.countryCode || "BR");
+        const name    = String(v.name  || "").trim();
+        const email   = String(v.email || "").trim();
+        const phone   = String(v.phone || "").replace(/\D/g, "");
+        const country = getCountryByCode(v.countryCode || "ES");
         return (
-            name.length >= 2 &&
-            emailIsValid(email) &&
-            phone.length >= country.digits
+            name.length   >= 2         &&
+            emailIsValid(email)        &&
+            phone.length  >= country.digits
         );
     }
 
@@ -361,15 +361,15 @@ function shouldShowMotivation(q) {
     const idx1 = state.index + 1;
     if (idx1 % 3 !== 0) return false;
     const blockTypes = new Set([
-        "metrics", "bmi_info", "projection", "gen_email", "email",
-        "goaldate", "target", "consent", "eventdate", "lang_gate"
+        "metrics","bmi_info","projection","gen_email","email",
+        "goaldate","target","consent","eventdate","lang_gate"
     ]);
     if (blockTypes.has(q.type)) return false;
     return true;
 }
 
 function motivationHtml() {
-    const idx = Math.floor(state.index / 3);
+    const idx  = Math.floor(state.index / 3);
     const pick =
         (window.tMotivation && window.tMotivation(idx)) ||
         (Array.isArray(window.MOTIVATION) ? window.MOTIVATION[idx % window.MOTIVATION.length] : null) ||
@@ -377,7 +377,7 @@ function motivationHtml() {
     return `
     <div class="sideBox" style="max-width:720px;">
       <b>${escapeHtml(pick.title || "")}</b>
-      <p>${escapeHtml(pick.text || "")}</p>
+      <p>${escapeHtml(pick.text  || "")}</p>
     </div>`;
 }
 
@@ -391,42 +391,42 @@ function render() {
     if (!q) return;
     document.body.classList.toggle("is-generating", q.type === "gen_email");
 
-    const backBtn = el("backBtn");
+    const backBtn     = el("backBtn");
     const continueBtn = el("continueBtn");
-    const hint = el("hint");
+    const hint        = el("hint");
 
-    backBtn.textContent = tUI("back");
+    backBtn.textContent     = tUI("back");
     continueBtn.textContent = tUI("continue");
 
     if (q.type === "lang_gate") return renderLangGate(q);
 
-    backBtn.disabled = (state.index === 0 || q.type === "gen_email");
+    backBtn.disabled          = (state.index === 0 || q.type === "gen_email");
     continueBtn.style.display = "none";
-    continueBtn.onclick = null;
-    hint.textContent = "";
+    continueBtn.onclick       = null;
+    hint.textContent          = "";
 
-    if (q.type === "single") return (q.ui === "image") ? renderSingleImage(q) : renderSingle(q);
-    if (q.type === "multi") return renderMulti(q);
-    if (q.type === "consent") return renderConsent(q);
-    if (q.type === "metrics") return renderMetrics(q);
-    if (q.type === "bmi_info") return renderBmiInfo(q);
-    if (q.type === "goaldate") return renderGoalDate(q);
-    if (q.type === "eventdate") return renderEventDate(q);
-    if (q.type === "target") return renderTarget(q);
+    if (q.type === "single")     return (q.ui === "image") ? renderSingleImage(q) : renderSingle(q);
+    if (q.type === "multi")      return renderMulti(q);
+    if (q.type === "consent")    return renderConsent(q);
+    if (q.type === "metrics")    return renderMetrics(q);
+    if (q.type === "bmi_info")   return renderBmiInfo(q);
+    if (q.type === "goaldate")   return renderGoalDate(q);
+    if (q.type === "eventdate")  return renderEventDate(q);
+    if (q.type === "target")     return renderTarget(q);
     if (q.type === "projection") return renderProjection(q);
-    if (q.type === "gen_email") return renderGenEmail(q);
-    if (q.type === "email") return renderEmail(q);
+    if (q.type === "gen_email")  return renderGenEmail(q);
+    if (q.type === "email")      return renderEmail(q);
 }
 
 /* ─── renderLangGate ─── */
 function renderLangGate(q) {
-    const content = el("content");
-    const backBtn = el("backBtn");
+    const content     = el("content");
+    const backBtn     = el("backBtn");
     const continueBtn = el("continueBtn");
-    const hint = el("hint");
+    const hint        = el("hint");
 
-    backBtn.disabled = true;
-    hint.textContent = "";
+    backBtn.disabled          = true;
+    hint.textContent          = "";
     continueBtn.style.display = "none";
 
     const currentLang = getLang();
@@ -457,9 +457,9 @@ function renderLangGate(q) {
 /* ─── renderSingle ─── */
 function renderSingle(q) {
     const content = el("content");
-    const hint = el("hint");
+    const hint    = el("hint");
     hint.textContent = tUI("pickOne");
-    const current = getAnswer(q.id) || "";
+    const current    = getAnswer(q.id) || "";
 
     const optsHtml = q.options.map(o => `
       <div class="opt ${current === o.key ? "selected" : ""}" data-key="${o.key}">
@@ -483,8 +483,8 @@ function renderSingle(q) {
         if (!item) return;
         const key = item.dataset.key;
         setAnswer(q.id, key);
-        if (q.id === "alcohol_use" && key === "no") setAnswer("alcohol_freq", "rare");
-        if (q.id === "smoke_use" && key === "no") setAnswer("smoke_freq", "rare");
+        if (q.id === "alcohol_use"   && key === "no") setAnswer("alcohol_freq", "rare");
+        if (q.id === "smoke_use"     && key === "no") setAnswer("smoke_freq",   "rare");
         if (q.id === "important_event" && key === "none") setAnswer("event_date", { date: "" });
         goNext();
     });
@@ -493,9 +493,9 @@ function renderSingle(q) {
 /* ─── renderSingleImage ─── */
 function renderSingleImage(q) {
     const content = el("content");
-    const hint = el("hint");
+    const hint    = el("hint");
     hint.textContent = tQ(q.id, "help", q.help) || tUI("continue");
-    const current = getAnswer(q.id) || q.default || "";
+    const current    = getAnswer(q.id) || q.default || "";
 
     const items = q.options.map(o => `
       <div class="imgOpt ${current === o.key ? "selected" : ""}" data-key="${o.key}">
@@ -527,11 +527,11 @@ function renderSingleImage(q) {
 
 /* ─── renderMulti ─── */
 function renderMulti(q) {
-    const content = el("content");
-    const hint = el("hint");
+    const content     = el("content");
+    const hint        = el("hint");
     const continueBtn = el("continueBtn");
-    const current = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
-    hint.textContent = tUI("pickMany");
+    const current     = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
+    hint.textContent  = tUI("pickMany");
 
     const optsHtml = q.options.map(o => `
       <div class="opt ${current.includes(o.key) ? "selected" : ""}" data-key="${o.key}">
@@ -554,9 +554,9 @@ function renderMulti(q) {
     el("options").addEventListener("click", (e) => {
         const item = e.target.closest(".opt");
         if (!item) return;
-        const key = item.dataset.key;
-        let arr = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
-        const idx = arr.indexOf(key);
+        const key       = item.dataset.key;
+        let arr         = Array.isArray(getAnswer(q.id)) ? [...getAnswer(q.id)] : [];
+        const idx       = arr.indexOf(key);
         if (idx >= 0) arr.splice(idx, 1); else arr.push(key);
         const exclusive = q.exclusiveKey;
         if (exclusive) {
@@ -568,14 +568,14 @@ function renderMulti(q) {
     });
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
-    continueBtn.disabled = !isAnswered(q);
-    continueBtn.onclick = () => { if (!isAnswered(q)) return; goNext(); };
+    continueBtn.textContent   = tUI("continue");
+    continueBtn.disabled      = !isAnswered(q);
+    continueBtn.onclick       = () => { if (!isAnswered(q)) return; goNext(); };
 }
 
 /* ─── renderConsent ─── */
 function renderConsent(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
     continueBtn.textContent = tUI("continue");
     const val = getAnswer(q.id) || { truth: false, terms: false };
@@ -591,11 +591,11 @@ function renderConsent(q) {
   </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
+    continueBtn.textContent   = tUI("continue");
 
     const truth = el("truth");
     const terms = el("terms");
-    const sync = () => {
+    const sync  = () => {
         setAnswer(q.id, { truth: !!truth.checked, terms: !!terms.checked });
         continueBtn.disabled = !isAnswered(q);
     };
@@ -607,11 +607,11 @@ function renderConsent(q) {
 
 /* ─── renderMetrics ─── */
 function renderMetrics(q) {
-    const content = el("content");
-    const hint = el("hint");
+    const content     = el("content");
+    const hint        = el("hint");
     const continueBtn = el("continueBtn");
-    hint.textContent = tUI("fillMetrics");
-    const a = getAnswer(q.id) || { heightCm: "", weightKg: "" };
+    hint.textContent  = tUI("fillMetrics");
+    const a           = getAnswer(q.id) || { heightCm: "", weightKg: "" };
 
     content.innerHTML = `
   <div class="q">
@@ -646,29 +646,29 @@ function renderMetrics(q) {
   </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
+    continueBtn.textContent   = tUI("continue");
 
-    const hEl = el("h");
-    const wEl = el("w");
-    const bmiBox = el("bmiBox");
-    const bmiValEl = el("bmiVal");
-    const bmiCatEl = el("bmiCat");
+    const hEl       = el("h");
+    const wEl       = el("w");
+    const bmiBox    = el("bmiBox");
+    const bmiValEl  = el("bmiVal");
+    const bmiCatEl  = el("bmiCat");
     const bmiMarkEl = el("bmiMarker");
     const bmiNoteEl = el("bmiNote");
 
     const sync = () => {
-        const h = parseFloat(hEl.value);
-        const w = parseFloat(wEl.value);
+        const h  = parseFloat(hEl.value);
+        const w  = parseFloat(wEl.value);
         setAnswer(q.id, { heightCm: h, weightKg: w });
         const ok = isAnswered(q);
         continueBtn.disabled = !ok;
         if (ok) {
             const bmi = bmiFrom(h, w);
             const cat = bmiCategory(bmi);
-            bmiBox.style.display = "grid";
-            bmiValEl.textContent = `${tUI("bmiPrefix")} ${bmi.toFixed(1)}`;
-            bmiCatEl.textContent = `${tUI("bmiCategoryPrefix")} ${bmiCategoryLabel(cat.key)}`;
-            bmiMarkEl.style.left = bmiMarkerPct(bmi) + "%";
+            bmiBox.style.display  = "grid";
+            bmiValEl.textContent  = `${tUI("bmiPrefix")} ${bmi.toFixed(1)}`;
+            bmiCatEl.textContent  = `${tUI("bmiCategoryPrefix")} ${bmiCategoryLabel(cat.key)}`;
+            bmiMarkEl.style.left  = bmiMarkerPct(bmi) + "%";
             bmiNoteEl.textContent = tUI(`bmiNote_${cat.key}`, "");
         } else {
             bmiBox.style.display = "none";
@@ -682,15 +682,15 @@ function renderMetrics(q) {
 
 /* ─── renderBmiInfo ─── */
 function renderBmiInfo(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
     el("hint").textContent = tUI("clickContinue");
 
-    const m = getAnswer("metrics") || {};
-    const bmi = bmiFrom(m.heightCm, m.weightKg);
-    const cat = bmi ? bmiCategory(bmi) : { key: "normal" };
-    const risks = bmi ? bmiRisksTextByKey(cat.key) : [];
-    const bodyKey = getAnswer("body_current") || "body_average";
+    const m        = getAnswer("metrics") || {};
+    const bmi      = bmiFrom(m.heightCm, m.weightKg);
+    const cat      = bmi ? bmiCategory(bmi) : { key: "normal" };
+    const risks    = bmi ? bmiRisksTextByKey(cat.key) : [];
+    const bodyKey  = getAnswer("body_current") || "body_average";
 
     content.innerHTML = `
     <div class="q">
@@ -728,20 +728,20 @@ function renderBmiInfo(q) {
     </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
-    continueBtn.disabled = false;
-    continueBtn.onclick = () => goNext();
+    continueBtn.textContent   = tUI("continue");
+    continueBtn.disabled      = false;
+    continueBtn.onclick       = () => goNext();
 }
 
 /* ─── renderGoalDate ─── */
 function renderGoalDate(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
     el("hint").textContent = tUI("chooseDateHint");
 
     const existing = getAnswer(q.id);
     if (!existing || !existing.date) setAnswer(q.id, { date: addMonthsISO(todayISO(), 6) });
-    const val = getAnswer(q.id) || { date: "" };
+    const val     = getAnswer(q.id) || { date: "" };
     const minDate = todayISO();
 
     content.innerHTML = `
@@ -756,15 +756,15 @@ function renderGoalDate(q) {
     </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
+    continueBtn.textContent   = tUI("continue");
 
-    const dt = el("dt");
+    const dt  = el("dt");
     const err = el("dateErr");
     const sync = () => {
-        const d = dt.value || "";
+        const d    = dt.value || "";
         setAnswer(q.id, { date: d });
         const past = d && isPastDate(d);
-        err.style.display = past ? "block" : "none";
+        err.style.display    = past ? "block" : "none";
         continueBtn.disabled = !isAnswered(q);
     };
     dt.addEventListener("input", sync);
@@ -774,13 +774,13 @@ function renderGoalDate(q) {
 
 /* ─── renderEventDate ─── */
 function renderEventDate(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
     el("hint").textContent = tUI("chooseDateHint");
 
     const existing = getAnswer(q.id);
     if (!existing || !existing.date) setAnswer(q.id, { date: addMonthsISO(todayISO(), 3) });
-    const val = getAnswer(q.id) || { date: "" };
+    const val     = getAnswer(q.id) || { date: "" };
     const minDate = todayISO();
 
     content.innerHTML = `
@@ -795,15 +795,15 @@ function renderEventDate(q) {
     </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
+    continueBtn.textContent   = tUI("continue");
 
     const evt = el("evt");
     const err = el("evtErr");
     const sync = () => {
-        const d = evt.value || "";
+        const d    = evt.value || "";
         setAnswer(q.id, { date: d });
         const past = d && isPastDate(d);
-        err.style.display = past ? "block" : "none";
+        err.style.display    = past ? "block" : "none";
         continueBtn.disabled = !isAnswered(q);
     };
     evt.addEventListener("input", sync);
@@ -813,11 +813,11 @@ function renderEventDate(q) {
 
 /* ─── renderTarget ─── */
 function renderTarget(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
     el("hint").textContent = tUI("typeContinueHint");
 
-    const val = getAnswer(q.id) || { targetWeightKg: "" };
+    const val      = getAnswer(q.id) || { targetWeightKg: "" };
     const valueStr = isFinite(Number(val.targetWeightKg)) ? String(val.targetWeightKg) : "";
 
     content.innerHTML = `
@@ -833,9 +833,9 @@ function renderTarget(q) {
     </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
+    continueBtn.textContent   = tUI("continue");
 
-    const tw = el("tw");
+    const tw   = el("tw");
     const sync = () => {
         const raw = String(tw.value || "").trim();
         const num = Number(raw);
@@ -853,12 +853,12 @@ function drawProjectionChart(canvas, startISO, endISO, w0, w1) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const pad = { l: 42, r: 18, t: 16, b: 34 };
-    const W = canvas.width - pad.l - pad.r;
-    const H = canvas.height - pad.t - pad.b;
+    const W   = canvas.width  - pad.l - pad.r;
+    const H   = canvas.height - pad.t - pad.b;
 
-    ctx.globalAlpha = 0.35;
-    ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 1;
+    ctx.globalAlpha  = 0.35;
+    ctx.strokeStyle  = "#fff";
+    ctx.lineWidth    = 1;
     for (let i = 0; i <= 4; i++) {
         const y = pad.t + (H * (i / 4));
         ctx.beginPath();
@@ -868,30 +868,30 @@ function drawProjectionChart(canvas, startISO, endISO, w0, w1) {
     }
     ctx.globalAlpha = 1;
 
-    const minY = Math.min(w0, w1) - 2;
-    const maxY = Math.max(w0, w1) + 2;
-    const yToPx = (w) => pad.t + (1 - ((w - minY) / (maxY - minY))) * H;
+    const minY   = Math.min(w0, w1) - 2;
+    const maxY   = Math.max(w0, w1) + 2;
+    const yToPx  = (w) => pad.t + (1 - ((w - minY) / (maxY - minY))) * H;
 
     ctx.fillStyle = "rgba(255,255,255,.78)";
-    ctx.font = "12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.font      = "12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
     for (let i = 0; i <= 4; i++) {
         const v = maxY - ((maxY - minY) * (i / 4));
         ctx.fillText(fmt1(v), 8, pad.t + (H * (i / 4)) + 4);
     }
 
     ctx.strokeStyle = "rgba(255,255,255,.92)";
-    ctx.lineWidth = 3;
+    ctx.lineWidth   = 3;
     ctx.beginPath();
     ctx.moveTo(pad.l, yToPx(w0));
     ctx.lineTo(pad.l + W, yToPx(w1));
     ctx.stroke();
 
     ctx.fillStyle = "rgba(255,255,255,.95)";
-    ctx.beginPath(); ctx.arc(pad.l, yToPx(w0), 5, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(pad.l + W, yToPx(w1), 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(pad.l,       yToPx(w0), 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(pad.l + W,   yToPx(w1), 5, 0, Math.PI * 2); ctx.fill();
 
     ctx.fillStyle = "rgba(255,255,255,.70)";
-    ctx.font = "12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
+    ctx.font      = "12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial";
     ctx.fillText(formatDateByLang(startISO), pad.l, pad.t + H + 24);
     const endLabel = formatDateByLang(endISO);
     ctx.fillText(endLabel, pad.l + W - ctx.measureText(endLabel).width, pad.t + H + 24);
@@ -899,33 +899,33 @@ function drawProjectionChart(canvas, startISO, endISO, w0, w1) {
 
 /* ─── renderProjection ─── */
 function renderProjection(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
     el("hint").textContent = tUI("clickContinue");
 
-    const m = getAnswer("metrics") || {};
-    const t = getAnswer("target") || {};
+    const m  = getAnswer("metrics") || {};
+    const t  = getAnswer("target")  || {};
     const w0 = Number(m.weightKg);
     const w1 = Number(t.targetWeightKg);
 
     const start = todayISO();
-    const ev = getAnswer("important_event");
-    const evd = getAnswer("event_date") || {};
-    const gd = getAnswer("goal_date") || {};
-    const end = (ev && ev !== "none" && evd.date) ? evd.date : (gd.date || addMonthsISO(start, 6));
+    const ev    = getAnswer("important_event");
+    const evd   = getAnswer("event_date") || {};
+    const gd    = getAnswer("goal_date")  || {};
+    const end   = (ev && ev !== "none" && evd.date) ? evd.date : (gd.date || addMonthsISO(start, 6));
 
-    const days = daysBetween(start, end);
-    const weeks = Math.max(1, Math.round(days / 7));
-    const delta = w0 - w1;
+    const days      = daysBetween(start, end);
+    const weeks     = Math.max(1, Math.round(days / 7));
+    const delta     = w0 - w1;
     const kgPerWeek = delta / weeks;
-    const absRate = Math.abs(kgPerWeek);
+    const absRate   = Math.abs(kgPerWeek);
 
     let status = tUI("proj_status_default");
-    let note = tUI("proj_note_default");
-    if (delta <= 0) { status = tUI("proj_status_gain"); note = tUI("proj_note_gain"); }
-    else if (absRate > 1.25) { status = tUI("proj_status_aggressive"); note = tUI("proj_note_aggressive"); }
-    else if (absRate > 0.25) { status = tUI("proj_status_realistic"); note = tUI("proj_note_realistic"); }
-    if (ev && ev !== "none") { note = tUI("proj_note_event"); }
+    let note   = tUI("proj_note_default");
+    if      (delta <= 0)      { status = tUI("proj_status_gain");       note = tUI("proj_note_gain");       }
+    else if (absRate > 1.25)  { status = tUI("proj_status_aggressive"); note = tUI("proj_note_aggressive"); }
+    else if (absRate > 0.25)  { status = tUI("proj_status_realistic");  note = tUI("proj_note_realistic");  }
+    if (ev && ev !== "none")  { note   = tUI("proj_note_event"); }
 
     content.innerHTML = `
     <div class="q">
@@ -947,17 +947,17 @@ function renderProjection(q) {
     drawProjectionChart(el("chart"), start, end, w0, w1);
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("continue");
-    continueBtn.disabled = false;
-    continueBtn.onclick = () => goNext();
+    continueBtn.textContent   = tUI("continue");
+    continueBtn.disabled      = false;
+    continueBtn.onclick       = () => goNext();
 }
 
 /* ─── renderGenEmail ─── */
-let genTimer = null;
-let tickerRAF = null;
+let genTimer   = null;
+let tickerRAF  = null;
 
 function stopGenAnimations() {
-    if (genTimer) cancelAnimationFrame(genTimer); genTimer = null;
+    if (genTimer)  cancelAnimationFrame(genTimer);  genTimer  = null;
     if (tickerRAF) cancelAnimationFrame(tickerRAF); tickerRAF = null;
 }
 
@@ -984,9 +984,9 @@ function buildCommentsHtml(list, repeat = 1) {
 }
 
 function renderGenEmail(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
-    el("hint").textContent = "";
+    el("hint").textContent    = "";
     continueBtn.style.display = "none";
 
     content.innerHTML = `
@@ -1005,10 +1005,10 @@ function renderGenEmail(q) {
       </div>
     </div>`;
 
-    const row = el("tickerRow");
+    const row      = el("tickerRow");
     const i18nList = (typeof tTestimonials === "function" ? tTestimonials() : null);
-    const list = (Array.isArray(i18nList) && i18nList.length) ? i18nList : TESTIMONIALS;
-    row.innerHTML = buildCommentsHtml(list, 2);
+    const list     = (Array.isArray(i18nList) && i18nList.length) ? i18nList : TESTIMONIALS;
+    row.innerHTML  = buildCommentsHtml(list, 2);
 
     let x = 0;
     const animateTicker = () => {
@@ -1021,109 +1021,179 @@ function renderGenEmail(q) {
     tickerRAF = requestAnimationFrame(animateTicker);
 
     const MAX_MS = 8500;
-    const start = performance.now();
-    const barEl = el("genBar");
+    const start  = performance.now();
+    const barEl  = el("genBar");
     const leftEl = el("genLeft");
 
     const tick = (t) => {
-        const p = Math.min(1, (t - start) / MAX_MS);
+        const p    = Math.min(1, (t - start) / MAX_MS);
         const perc = Math.round(p * 100);
-        barEl.style.width = perc + "%";
+        barEl.style.width  = perc + "%";
         leftEl.textContent = perc + "%";
         if (p < 1) { genTimer = requestAnimationFrame(tick); }
-        else { cancelAnimationFrame(tickerRAF); goNext(); }
+        else        { cancelAnimationFrame(tickerRAF); goNext(); }
     };
     genTimer = requestAnimationFrame(tick);
 }
 
 /* ─── renderEmail  (NOVO – com nome, e-mail e telefone LATAM) ─── */
 function renderEmail(q) {
-    const content = el("content");
+    const content     = el("content");
     const continueBtn = el("continueBtn");
-    el("hint").textContent = tUI("typeAndConfirm");
+    el("hint").textContent = "";
 
-    const raw = getAnswer(q.id) || {};
-    const savedName = raw.name || "";
-    const savedEmail = raw.email || "";
-    const savedPhone = raw.phone || "";
-    const savedCCode = raw.countryCode || "BR";
+    const raw        = getAnswer(q.id) || {};
+    const savedName  = raw.name        || "";
+    const savedEmail = raw.email       || "";
+    const savedPhone = raw.phone       || "";
+    const savedCCode = raw.countryCode || "ES";
 
     /* ── seletor de países ── */
     const countryOptions = LATAM_COUNTRIES.map(c =>
-        `<option value="${c.code}" ${c.code === savedCCode ? "selected" : ""}>
-           ${c.flag} +${c.dial} ${c.name}
-         </option>`
+        `<option value="${c.code}" ${c.code === savedCCode ? "selected" : ""}>${c.flag} +${c.dial} ${c.name}</option>`
     ).join("");
 
-    content.innerHTML = `
-    <div class="q">
-      <h1 class="q-title">${escapeHtml(tQ(q.id, "title", q.title))}</h1>
-      ${q.help ? `<p class="q-help">${escapeHtml(tQ(q.id, "help", q.help))}</p>` : ""}
+    const inputStyle = `
+        width:100%; border:1px solid rgba(255,255,255,.14);
+        background:rgba(0,0,0,.30); color:#fff; border-radius:10px;
+        padding:13px 14px; font-size:14px; outline:none;
+        transition:border-color .14s, box-shadow .14s;
+        font-family:inherit;
+    `;
+    const labelStyle = `
+        font-size:11px; font-weight:900; letter-spacing:.6px;
+        text-transform:uppercase; color:rgba(255,255,255,.40);
+    `;
+    const fieldWrapStyle = `
+        width:100%; max-width:520px; margin:0 auto;
+        border:1px solid rgba(255,255,255,.10);
+        border-radius:14px; background:rgba(255,255,255,.025);
+        padding:14px 16px; text-align:left;
+        display:grid; gap:8px;
+    `;
 
-      <!-- NOME -->
-      <div class="field">
-        <label>${escapeHtml(tUI("nameLabel", "Nome completo"))}</label>
+    content.innerHTML = `
+    <div class="q" style="max-width:540px; margin:0 auto; text-align:left; animation:fadeUp .22s cubic-bezier(.2,.8,.2,1);">
+
+      <!-- ── HEADER ── -->
+      <div style="display:flex; flex-direction:column; gap:6px; padding-bottom:4px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="
+            width:36px; height:36px; border-radius:999px; flex:0 0 auto;
+            background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
+            display:grid; place-items:center; font-size:17px; line-height:1;">✓</div>
+          <h1 class="q-title" style="margin:0; font-size:clamp(19px,2vw,26px); line-height:1.15;">
+            ${escapeHtml(tQ(q.id, "title", q.title))}
+          </h1>
+        </div>
+        ${q.help ? `<p style="margin:0 0 0 46px; color:rgba(255,255,255,.50); font-size:13px; line-height:1.45;">${escapeHtml(tQ(q.id, "help", q.help))}</p>` : ""}
+      </div>
+
+      <!-- ── DIVIDER ── -->
+      <div style="height:1px; background:rgba(255,255,255,.07); border-radius:999px; margin:4px 0;"></div>
+
+      <!-- ── NOME ── -->
+      <div style="${fieldWrapStyle}">
+        <label style="${labelStyle}">${escapeHtml(tUI("nameLabel", "Nome completo"))}</label>
         <input id="inp-name" type="text" autocomplete="name"
                placeholder="${escapeHtml(tUI("namePlaceholder", "Seu nome completo"))}"
-               value="${escapeHtml(savedName)}" />
+               value="${escapeHtml(savedName)}"
+               style="${inputStyle}" />
       </div>
 
-      <!-- E-MAIL -->
-      <div class="field">
-        <label>${escapeHtml(tUI("emailLabel"))}</label>
+      <!-- ── E-MAIL ── -->
+      <div style="${fieldWrapStyle}">
+        <label style="${labelStyle}">${escapeHtml(tUI("emailLabel"))}</label>
         <input id="inp-email" type="email" autocomplete="email"
                placeholder="${escapeHtml(tUI("emailPlaceholder"))}"
-               value="${escapeHtml(savedEmail)}" />
-        <div class="inputError" id="err-email" style="display:none;color:rgba(255,80,80,.9);font-size:12px;margin-top:4px;">
-          ${escapeHtml(tUI("emailError", "Digite um e-mail válido."))}
+               value="${escapeHtml(savedEmail)}"
+               style="${inputStyle}" />
+        <div id="err-email" style="display:none; color:rgba(255,90,90,.85); font-size:12px; padding:2px 2px 0;">
+          ⚠ ${escapeHtml(tUI("emailError", "Digite um e-mail válido."))}
         </div>
       </div>
 
-      <!-- TELEFONE -->
-      <div class="field">
-        <label>${escapeHtml(tUI("phoneLabel", "WhatsApp / Telefone"))}</label>
-        <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:8px;align-items:center;">
-          <select id="inp-country"
-                  style="border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.35);
-                         color:#fff;border-radius:10px;padding:12px 8px;font-size:13px;
-                         outline:none;cursor:pointer;width:100%;">
-            ${countryOptions}
-          </select>
-          <input id="inp-phone" type="tel" autocomplete="tel"
-                 placeholder="${escapeHtml(tUI("phonePlaceholder", "(##) #####-####"))}"
-                 value="${escapeHtml(savedPhone)}"
-                 style="width:100%;" />
-        </div>
-        <div class="inputError" id="err-phone" style="display:none;color:rgba(255,80,80,.9);font-size:12px;margin-top:4px;">
-          ${escapeHtml(tUI("phoneError", "Digite um número de telefone válido."))}
+      <!-- ── TELEFONE ── -->
+      <div style="${fieldWrapStyle}">
+        <label style="${labelStyle}">${escapeHtml(tUI("phoneLabel", "WhatsApp / Telefone"))}</label>
+        <select id="inp-country" style="
+            width:100%; border:1px solid rgba(255,255,255,.14);
+            background:rgba(0,0,0,.30); color:#fff; border-radius:10px;
+            padding:12px 14px; font-size:13px; outline:none; cursor:pointer;
+            font-family:inherit; appearance:none;
+            background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\");
+            background-repeat:no-repeat; background-position:right 14px center;">
+          ${countryOptions}
+        </select>
+        <input id="inp-phone" type="tel" autocomplete="tel"
+               placeholder="000 000 000"
+               value="${escapeHtml(savedPhone)}"
+               style="${inputStyle}" />
+        <div id="err-phone" style="display:none; color:rgba(255,90,90,.85); font-size:12px; padding:2px 2px 0;">
+          ⚠ ${escapeHtml(tUI("phoneError", "Digite um número válido para o país selecionado."))}
         </div>
       </div>
 
-      <!-- CONFIRM -->
-      <div class="field">
-        <label style="margin-bottom:0;">
-          <input id="inp-confirm" type="checkbox" />
-          ${escapeHtml(tUI("emailConfirmLabel"))}
+      <!-- ── CONFIRM ── -->
+      <div style="
+        width:100%; max-width:520px; margin:0 auto;
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:14px; background:rgba(255,255,255,.015);
+        padding:14px 16px; display:grid; gap:6px;">
+        <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+          <input id="inp-confirm" type="checkbox"
+                 style="margin-top:2px; width:16px; height:16px; flex:0 0 auto; cursor:pointer; accent-color:#fff;" />
+          <span style="font-size:13px; color:rgba(255,255,255,.72); line-height:1.45;">
+            ${escapeHtml(tUI("emailConfirmLabel"))}
+          </span>
         </label>
-        <div class="hint" style="margin-top:6px;">${escapeHtml(tUI("emailRedirectHint"))}</div>
+        <p style="margin:0; font-size:12px; color:rgba(255,255,255,.32); line-height:1.45; padding-left:26px;">
+          ${escapeHtml(tUI("emailRedirectHint"))}
+        </p>
       </div>
+
+      <!-- ── SEGURANÇA ── -->
+      <div style="
+        display:flex; align-items:center; justify-content:center;
+        gap:6px; color:rgba(255,255,255,.28); font-size:12px; padding-top:2px;">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 1L1 3v4c0 2.761 2.148 5.348 5 6 2.852-.652 5-3.239 5-6V3L6 1z"
+                stroke="rgba(255,255,255,.28)" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="M4 7l1.5 1.5L8 5" stroke="rgba(255,255,255,.28)"
+                stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>${escapeHtml(tUI("securityNote", "Seus dados estão seguros e não serão compartilhados."))}</span>
+      </div>
+
     </div>`;
 
     continueBtn.style.display = "inline-flex";
-    continueBtn.textContent = tUI("confirm");
+    continueBtn.textContent   = tUI("confirm");
 
-    const inpName = el("inp-name");
-    const inpEmail = el("inp-email");
-    const inpPhone = el("inp-phone");
+    const inpName    = el("inp-name");
+    const inpEmail   = el("inp-email");
+    const inpPhone   = el("inp-phone");
     const inpCountry = el("inp-country");
     const inpConfirm = el("inp-confirm");
-    const errEmail = el("err-email");
-    const errPhone = el("err-phone");
+    const errEmail   = el("err-email");
+    const errPhone   = el("err-phone");
+
+    /* ── foco visual nos inputs ── */
+    [inpName, inpEmail, inpPhone, inpCountry].forEach(inp => {
+        inp.addEventListener("focus", () => {
+            inp.style.borderColor = "rgba(255,255,255,.32)";
+            inp.style.boxShadow   = "0 0 0 4px rgba(255,255,255,.06)";
+        });
+        inp.addEventListener("blur", () => {
+            inp.style.borderColor = "rgba(255,255,255,.14)";
+            inp.style.boxShadow   = "none";
+        });
+    });
 
     /* ── aplica máscara de telefone ── */
     const applyMask = () => {
         const country = getCountryByCode(inpCountry.value);
-        const masked = applyPhoneMask(inpPhone.value, country.mask);
+        const masked  = applyPhoneMask(inpPhone.value, country.mask);
         inpPhone.value = masked;
         inpPhone.placeholder = country.mask.replace(/#/g, "0");
     };
@@ -1148,27 +1218,27 @@ function renderEmail(q) {
 
     const sync = () => {
         const country = getCountryByCode(inpCountry.value);
-        const name = inpName.value.trim();
-        const email = inpEmail.value.trim();
-        const phone = inpPhone.value;
+        const name    = inpName.value.trim();
+        const email   = inpEmail.value.trim();
+        const phone   = inpPhone.value;
 
         setAnswer(q.id, {
             name,
             email,
             phone,
             countryCode: inpCountry.value,
-            dialCode: country.dial,
+            dialCode:    country.dial,
         });
 
-        const phoneDigits = phone.replace(/\D/g, "");
-        const phoneOk = phoneDigits.length >= country.digits;
+        const phoneDigits    = phone.replace(/\D/g, "");
+        const phoneOk        = phoneDigits.length >= country.digits;
         errPhone.style.display = phone.length > 2 && !phoneOk ? "block" : "none";
 
         const allOk = name.length >= 2 && emailIsValid(email) && phoneOk && inpConfirm.checked;
         continueBtn.disabled = !allOk;
     };
 
-    inpName.addEventListener("input", sync);
+    inpName.addEventListener("input",    sync);
     inpConfirm.addEventListener("change", sync);
 
     // aplica máscara no valor salvo (caso haja)
@@ -1178,14 +1248,14 @@ function renderEmail(q) {
     /* ── ação do botão ── */
     continueBtn.onclick = () => {
         const country = getCountryByCode(inpCountry.value);
-        const name = inpName.value.trim();
-        const email = inpEmail.value.trim();
+        const name    = inpName.value.trim();
+        const email   = inpEmail.value.trim();
         // telefone: apenas dígitos + DDD do país (formato E.164 sem +)
         const phoneDigitsOnly = inpPhone.value.replace(/\D/g, "");
-        const phoneE164 = country.dial + phoneDigitsOnly;
+        const phoneE164       = country.dial + phoneDigitsOnly;
 
         const allOk = name.length >= 2 && emailIsValid(email) &&
-            phoneDigitsOnly.length >= country.digits && inpConfirm.checked;
+                      phoneDigitsOnly.length >= country.digits && inpConfirm.checked;
         if (!allOk) return;
 
         /* ── 1. Salvar para remarketing ── */
@@ -1193,16 +1263,16 @@ function renderEmail(q) {
             const lead = {
                 name,
                 email,
-                phone: phoneE164,          // ex: 5511999999999
+                phone:       phoneE164,          // ex: 5511999999999
                 phoneFormatted: inpPhone.value,  // ex: (11) 99999-9999
                 countryCode: inpCountry.value,
-                dialCode: country.dial,
-                lang: typeof getLang === "function" ? getLang() : "pt",
-                goal: getAnswer("goal"),
-                age: getAnswer("age"),
-                days: getAnswer("days"),
-                ts: Date.now(),
-                answers: JSON.parse(JSON.stringify(state.answers)),
+                dialCode:    country.dial,
+                lang:        typeof getLang === "function" ? getLang() : "pt",
+                goal:        getAnswer("goal"),
+                age:         getAnswer("age"),
+                days:        getAnswer("days"),
+                ts:          Date.now(),
+                answers:     JSON.parse(JSON.stringify(state.answers)),
             };
             localStorage.setItem("bv_lead", JSON.stringify(lead));
             // dispara evento customizado para pixels/GTM que escutam
@@ -1229,9 +1299,9 @@ function getNextIndex(currentIndex) {
     let i = currentIndex + 1;
     while (i < quiz.length) {
         const q = quiz[i];
-        if (q.id === "alcohol_freq" && getAnswer("alcohol_use") === "no") { i++; continue; }
-        if (q.id === "smoke_freq" && getAnswer("smoke_use") === "no") { i++; continue; }
-        if (q.id === "event_date" && getAnswer("important_event") === "none") { i++; continue; }
+        if (q.id === "alcohol_freq"  && getAnswer("alcohol_use")     === "no")   { i++; continue; }
+        if (q.id === "smoke_freq"    && getAnswer("smoke_use")        === "no")   { i++; continue; }
+        if (q.id === "event_date"    && getAnswer("important_event")  === "none") { i++; continue; }
         if (q.id === "goal_date") {
             const ev = getAnswer("important_event");
             if (ev && ev !== "none") { i++; continue; }
@@ -1245,9 +1315,9 @@ function getPrevIndex(currentIndex) {
     let i = currentIndex - 1;
     while (i >= 0) {
         const q = quiz[i];
-        if (q.id === "alcohol_freq" && getAnswer("alcohol_use") === "no") { i--; continue; }
-        if (q.id === "smoke_freq" && getAnswer("smoke_use") === "no") { i--; continue; }
-        if (q.id === "event_date" && getAnswer("important_event") === "none") { i--; continue; }
+        if (q.id === "alcohol_freq"  && getAnswer("alcohol_use")     === "no")   { i--; continue; }
+        if (q.id === "smoke_freq"    && getAnswer("smoke_use")        === "no")   { i--; continue; }
+        if (q.id === "event_date"    && getAnswer("important_event")  === "none") { i--; continue; }
         if (q.id === "goal_date") {
             const ev = getAnswer("important_event");
             if (ev && ev !== "none") { i--; continue; }
