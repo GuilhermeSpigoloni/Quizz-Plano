@@ -15,6 +15,9 @@ function initI18n(cb) {
 
 const CHECKOUT_URL = "https://pay.kiwify.com/zrUPXO1";
 
+// ↓ Cole aqui a URL do seu Google Apps Script (passo 2 do guia)
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw2C4T2N1lzVc0Ix-VmKehIrhWzDUN-UCLKfjUWbteUEoOVnXa4kmk5_ZmbyDmEP0cR2Q/exec";
+
 /* ========= PAÍSES LATAM ========= */
 const LATAM_COUNTRIES = [
     { code: "BR",  dial: "55",  flag: "🇧🇷", name: "Brasil",          mask: "(##) #####-####",  digits: 11 },
@@ -1246,11 +1249,10 @@ function renderEmail(q) {
     sync();
 
     /* ── ação do botão ── */
-    continueBtn.onclick = () => {
+    continueBtn.onclick = async () => {
         const country = getCountryByCode(inpCountry.value);
         const name    = inpName.value.trim();
         const email   = inpEmail.value.trim();
-        // telefone: apenas dígitos + DDD do país (formato E.164 sem +)
         const phoneDigitsOnly = inpPhone.value.replace(/\D/g, "");
         const phoneE164       = country.dial + phoneDigitsOnly;
 
@@ -1258,35 +1260,43 @@ function renderEmail(q) {
                       phoneDigitsOnly.length >= country.digits && inpConfirm.checked;
         if (!allOk) return;
 
-        /* ── 1. Salvar para remarketing ── */
-        try {
-            const lead = {
-                name,
-                email,
-                phone:       phoneE164,          // ex: 5511999999999
-                phoneFormatted: inpPhone.value,  // ex: (11) 99999-9999
-                countryCode: inpCountry.value,
-                dialCode:    country.dial,
-                lang:        typeof getLang === "function" ? getLang() : "pt",
-                goal:        getAnswer("goal"),
-                age:         getAnswer("age"),
-                days:        getAnswer("days"),
-                ts:          Date.now(),
-                answers:     JSON.parse(JSON.stringify(state.answers)),
-            };
-            localStorage.setItem("bv_lead", JSON.stringify(lead));
-            // dispara evento customizado para pixels/GTM que escutam
-            window.dispatchEvent(new CustomEvent("bv:lead_captured", { detail: lead }));
-        } catch (_) { /* localStorage bloqueado no navegador */ }
+        /* ── 1. Montar objeto do lead ── */
+        const lead = {
+            name,
+            email,
+            phone:          phoneE164,
+            phoneFormatted: inpPhone.value,
+            countryCode:    inpCountry.value,
+            dialCode:       country.dial,
+            lang:           typeof getLang === "function" ? getLang() : "pt",
+            goal:           getAnswer("goal"),
+            age:            getAnswer("age"),
+            days:           getAnswer("days"),
+            ts:             Date.now(),
+            answers:        JSON.parse(JSON.stringify(state.answers)),
+        };
 
-        /* ── 2. Redirecionar para o checkout Kiwify com prefill ── */
+        /* ── 2. Salvar no localStorage (fallback offline) ── */
+        try {
+            localStorage.setItem("bv_lead", JSON.stringify(lead));
+            window.dispatchEvent(new CustomEvent("bv:lead_captured", { detail: lead }));
+        } catch (_) {}
+
+        /* ── 3. Enviar para Google Sheets + Brevo via webhook ── */
+        if (WEBHOOK_URL && WEBHOOK_URL.startsWith("http")) {
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method:  "POST",
+                    mode:    "no-cors",          // Apps Script não precisa de preflight
+                    headers: { "Content-Type": "application/json" },
+                    body:    JSON.stringify(lead),
+                });
+            } catch (_) { /* silencia: o redirect acontece de qualquer forma */ }
+        }
+
+        /* ── 4. Redirecionar para o checkout Kiwify com prefill ── */
         if (CHECKOUT_URL && CHECKOUT_URL.startsWith("http")) {
-            // Kiwify aceita: name, email, phone (E.164 sem +) via query string
-            const params = new URLSearchParams({
-                name,
-                email,
-                phone: phoneE164,
-            });
+            const params = new URLSearchParams({ name, email, phone: phoneE164 });
             window.location.href = `${CHECKOUT_URL}?${params.toString()}`;
         } else {
             alert("Configure o CHECKOUT_URL no topo do quiz.js.");
