@@ -13,7 +13,7 @@ function initI18n(cb) {
     if (typeof cb === "function") cb();
 }
 
-const CHECKOUT_URL = "https://pay.kiwify.com/zrUPXO1";
+const CHECKOUT_URL = "https://mejorversion.lovable.app";
 
 // ↓ Cole aqui a URL do seu Google Apps Script (passo 2 do guia)
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw2C4T2N1lzVc0Ix-VmKehIrhWzDUN-UCLKfjUWbteUEoOVnXa4kmk5_ZmbyDmEP0cR2Q/exec";
